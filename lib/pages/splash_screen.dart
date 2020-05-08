@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:libra_movie/utils/media_query.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);
@@ -18,6 +18,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startCountdownTimer(context);
+    _asyncInit();
+  }
+
+  _asyncInit() async {
+    /// App启动时读取Sp数据，需要异步等待Sp初始化完成。
+    await SpUtil.getInstance();
   }
 
   @override
@@ -37,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.fill,
             ),
             Positioned(
-                top: ScreenUtils.getInstance().appBarHeight,
+                top: ScreenUtil.getStatusBarH(context),
                 right: 12,
                 child: Container(
                     padding:
