@@ -2,6 +2,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/res/Colors.dart';
+import 'package:libra_movie/res/TextStyle.dart';
 
 class ThemeProvider extends ChangeNotifier {
   static const Map<ThemeMode, String> themes = {
@@ -24,6 +25,7 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeMode getThemeMode() {
     String theme = SpUtil.getString(Constant.theme);
+    print("====${theme.toString()}=======");
     switch (theme) {
       case 'Dark':
         return ThemeMode.dark;
@@ -36,14 +38,22 @@ class ThemeProvider extends ChangeNotifier {
 
   getTheme({bool isDarkMode: false}) {
     return ThemeData(
+      primaryColorDark: Colours.dark_bg_color,
+      primaryColor: Colours.bg_color,
+      primaryColorBrightness: isDarkMode ? Brightness.dark : Brightness.light,
       // 页面背景色
       scaffoldBackgroundColor:
           isDarkMode ? Colours.dark_bg_color : Colours.bg_color,
-      appBarTheme: AppBarTheme(
-        elevation: 0.0,
-        color: isDarkMode ? Colours.dark_bg_color : Colors.white,
-        brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      textTheme: TextTheme(
+        // TextField输入文字颜色
+        subhead: isDarkMode ? TextStyles.textDark : TextStyles.text,
+        // Text文字样式
+        body1: isDarkMode ? TextStyles.textDark : TextStyles.text,
+        title: isDarkMode ? TextStyles.textDark : TextStyles.text,
+        subtitle:
+            isDarkMode ? TextStyles.textDarkGray12 : TextStyles.textGray12,
       ),
+      canvasColor: isDarkMode ? Colours.dark_bg_color : Colours.bg_color,
     );
   }
 }

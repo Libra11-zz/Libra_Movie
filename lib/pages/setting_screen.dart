@@ -16,20 +16,19 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     String theme = SpUtil.getString(Constant.theme);
-    String themeMode;
+    String themeModeString;
     switch (theme) {
       case 'Dark':
-        themeMode = _list[1];
+        themeModeString = _list[1];
         break;
       case 'Light':
-        themeMode = _list[2];
+        themeModeString = _list[2];
         break;
       default:
-        themeMode = _list[0];
+        themeModeString = _list[0];
         break;
     }
     return Scaffold(
-      appBar: AppBar(),
       body: Container(
           child: ListView.builder(
               itemCount: _list.length,
@@ -40,6 +39,9 @@ class _SettingScreenState extends State<SettingScreen> {
                       ThemeMode themeMode = index == 0
                           ? ThemeMode.system
                           : (index == 1 ? ThemeMode.dark : ThemeMode.light);
+                      setState(() {
+                        themeModeString = _list[index];
+                      });
                       Provider.of<ThemeProvider>(context, listen: false)
                           .setTheme(themeMode);
                     },
@@ -53,8 +55,9 @@ class _SettingScreenState extends State<SettingScreen> {
                             child: Text(_list[index]),
                           ),
                           Opacity(
-                              opacity: themeMode == _list[index] ? 1 : 0,
-                              child: Icon(Icons.done, color: Colors.blue))
+                              opacity: themeModeString == _list[index] ? 1 : 0,
+                              child:
+                                  Icon(Icons.done, color: Colors.orangeAccent))
                         ],
                       ),
                     ));

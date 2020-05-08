@@ -18,12 +18,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startCountdownTimer(context);
-    _asyncInit();
-  }
-
-  _asyncInit() async {
-    /// App启动时读取Sp数据，需要异步等待Sp初始化完成。
-    await SpUtil.getInstance();
   }
 
   @override
