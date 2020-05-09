@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:libra_movie/widgets/restart_widget.dart';
 
 class OtherScreen extends StatefulWidget {
   OtherScreen({Key key}) : super(key: key);
@@ -13,7 +14,11 @@ class _OtherScreenState extends State<OtherScreen> {
     return Scaffold(
       body: Container(
         child: Center(
-          child: Text("other screen"),
+          child: FlatButton(
+              onPressed: () {
+                RestartWidget.restartApp(context);
+              },
+              child: Text('重启')),
         ),
       ),
     );

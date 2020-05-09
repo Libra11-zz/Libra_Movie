@@ -25,7 +25,6 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeMode getThemeMode() {
     String theme = SpUtil.getString(Constant.theme);
-    print("====${theme.toString()}=======");
     switch (theme) {
       case 'Dark':
         return ThemeMode.dark;

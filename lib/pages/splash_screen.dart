@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:libra_movie/common/common.dart';
+import 'package:libra_movie/localization/app_localization.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);
@@ -17,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    print(SpUtil.getString(Constant.language));
     startCountdownTimer(context);
   }
 
@@ -49,9 +52,9 @@ class _SplashScreenState extends State<SplashScreen> {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {
-                          print("object");
+                          goToMovieScreen(context);
                         },
-                        child: Text("$_countDownTime | 跳过"),
+                        child: Text("$_countDownTime |  跳过"),
                       ),
                     )))
           ],

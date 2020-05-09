@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/pages/movie_screen.dart';
 import 'package:libra_movie/pages/other_screen.dart';
 import 'package:libra_movie/pages/setting_screen.dart';
@@ -36,28 +37,28 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   Icons.movie_filter,
                 ),
                 title: Text(
-                  '电影',
+                  AppLocalizations.of(context).translate('Home'),
                 )),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.live_tv,
                 ),
                 title: Text(
-                  '电视剧',
+                  AppLocalizations.of(context).translate('TV'),
                 )),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.devices_other,
                 ),
                 title: Text(
-                  '其他',
+                  AppLocalizations.of(context).translate('Search'),
                 )),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.settings,
                 ),
                 title: Text(
-                  '设置',
+                  AppLocalizations.of(context).translate('Settings'),
                 )),
           ],
           currentIndex: _currentIndex,

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:libra_movie/res/Colors.dart';
 
+///
+/// 暂时没用到
+///
 class ThemeUtils {
   static bool isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
@@ -45,13 +48,11 @@ class ThemeUtils {
       bool _isDark = false;
       final ui.Brightness platformBrightness =
           MediaQuery.platformBrightnessOf(context);
-      print(platformBrightness);
       if (mode == ThemeMode.dark ||
           (mode == ThemeMode.system &&
               platformBrightness == ui.Brightness.dark)) {
         _isDark = true;
       }
-      print(_isDark);
       SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         systemNavigationBarColor:
