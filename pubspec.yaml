@@ -49,6 +49,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/images/splash.jpeg
+   - assets/images/splash.jpg
    - lib/localization/en.json
    - lib/localization/zh.json
   #  - images/a_dot_ham.jpeg

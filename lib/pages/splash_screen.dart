@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    print(SpUtil.getString(Constant.language));
     startCountdownTimer(context);
   }
 
@@ -33,10 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: ScreenUtil.getScreenW(context),
+        height: ScreenUtil.getScreenH(context),
         child: Stack(
           children: <Widget>[
             Image(
-              image: AssetImage('assets/images/splash.jpeg'),
+              image: AssetImage('assets/images/splash.jpg'),
               fit: BoxFit.fill,
             ),
             Positioned(
@@ -79,6 +80,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void goToMovieScreen(context) {
     _timer.cancel();
-    Navigator.pushNamed(context, '/main');
+    // Navigator.pushNamed(context, '/main');
   }
 }

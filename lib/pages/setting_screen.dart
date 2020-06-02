@@ -19,7 +19,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     String theme = SpUtil.getString(Constant.theme);
-    String themeModeString;
+    String themeModeString = _list[2];
     switch (theme) {
       case 'Dark':
         themeModeString = _list[1];
@@ -34,7 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Container(
+          Expanded(
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
