@@ -1,8 +1,10 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/provider/language_provider.dart';
 import 'package:libra_movie/provider/theme_provider.dart';
+import 'package:libra_movie/utils/theme_util.dart';
 import 'package:libra_movie/widgets/restart_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   var _list = ['跟随系统', '开启', '关闭'];
   String language = SpUtil.getString(Constant.language);
+
   @override
   Widget build(BuildContext context) {
     String theme = SpUtil.getString(Constant.theme);
@@ -51,6 +54,8 @@ class _SettingScreenState extends State<SettingScreen> {
                           });
                           Provider.of<ThemeProvider>(context, listen: false)
                               .setTheme(themeMode);
+                          // 更新status bar颜色
+                          ThemeUtils.setStatusBar(context);
                         },
                         child: Container(
                           alignment: Alignment.centerLeft,

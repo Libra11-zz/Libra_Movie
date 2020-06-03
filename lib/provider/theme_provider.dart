@@ -39,6 +39,7 @@ class ThemeProvider extends ChangeNotifier {
     return ThemeData(
       primaryColorDark: Colours.dark_bg_color,
       primaryColor: Colours.bg_color,
+      accentColor: isDarkMode ? Colors.white : Colors.black,
       primaryColorBrightness: isDarkMode ? Brightness.dark : Brightness.light,
       // 页面背景色
       scaffoldBackgroundColor:

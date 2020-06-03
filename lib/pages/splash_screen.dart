@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:libra_movie/common/common.dart';
-import 'package:libra_movie/localization/app_localization.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);
@@ -80,6 +78,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void goToMovieScreen(context) {
     _timer.cancel();
-    // Navigator.pushNamed(context, '/main');
+    Navigator.pushNamed(context, '/main');
   }
 }

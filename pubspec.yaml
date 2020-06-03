@@ -22,7 +22,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   provider: 
   flustars:
-  http: ^0.12.1
+  dio: ^2.1.14
   flutter_localizations:
     sdk: flutter
 

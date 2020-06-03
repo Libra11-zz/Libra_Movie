@@ -1,66 +1,39 @@
-import 'dart:io';
-import 'dart:ui' as ui;
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:libra_movie/res/Colors.dart';
+import 'package:libra_movie/common/common.dart';
 
-///
-/// 暂时没用到
-///
 class ThemeUtils {
-  static bool isDark(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark;
-  }
-
-  static Color getDarkColor(BuildContext context, Color darkColor) {
-    return isDark(context) ? darkColor : null;
-  }
-
-  static Color getIconColor(BuildContext context) {
-    return isDark(context) ? Colours.dark_text : null;
-  }
-
-  static Color getBackgroundColor(BuildContext context) {
-    return Theme.of(context).scaffoldBackgroundColor;
-  }
-
-  static Color getDialogBackgroundColor(BuildContext context) {
-    return Theme.of(context).canvasColor;
-  }
-
-  static Color getStickyHeaderColor(BuildContext context) {
-    return isDark(context) ? Colours.dark_bg_gray_ : Colours.bg_gray_;
-  }
-
-  static Color getDialogTextFieldColor(BuildContext context) {
-    return isDark(context) ? Colours.dark_bg_gray_ : Colours.bg_gray;
-  }
-
-  static Color getKeyboardActionsColor(BuildContext context) {
-    return isDark(context) ? Colours.dark_bg_color : Colors.grey[200];
-  }
-
-  /// 设置NavigationBar样式
-  static void setSystemNavigationBarStyle(
-      BuildContext context, ThemeMode mode) {
-    /// 仅针对安卓
-    if (Platform.isAndroid) {
-      bool _isDark = false;
-      final ui.Brightness platformBrightness =
-          MediaQuery.platformBrightnessOf(context);
-      if (mode == ThemeMode.dark ||
-          (mode == ThemeMode.system &&
-              platformBrightness == ui.Brightness.dark)) {
-        _isDark = true;
-      }
-      SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor:
-            _isDark ? Colours.dark_bg_color : Colors.white,
-        systemNavigationBarIconBrightness:
-            _isDark ? Brightness.light : Brightness.dark,
-      );
-      SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  static void setStatusBar(context) {
+    String theme = SpUtil.getString(Constant.theme);
+    // 获取系统主题颜色
+    final Brightness brightnessValue =
+        MediaQuery.of(context).platformBrightness;
+    bool isDark = brightnessValue == Brightness.dark;
+    var res;
+    var sbBrightness;
+    if (theme == 'Light') {
+      res = Brightness.dark;
+      sbBrightness = Brightness.light;
+    } else if (theme == 'Dark') {
+      res = Brightness.light;
+      sbBrightness = Brightness.dark;
+    } else if (theme == 'System' && isDark) {
+      res = Brightness.light;
+      sbBrightness = Brightness.dark;
+    } else {
+      res = Brightness.dark;
+      sbBrightness = Brightness.light;
     }
+    // 更改statusbar的背景色为透明色
+    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Color(0xFF000000),
+      systemNavigationBarDividerColor: null,
+      systemNavigationBarIconBrightness: res,
+      statusBarIconBrightness: res,
+      statusBarBrightness: sbBrightness,
+    );
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
