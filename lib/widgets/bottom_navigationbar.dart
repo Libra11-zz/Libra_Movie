@@ -4,7 +4,6 @@ import 'package:libra_movie/pages/movie_screen.dart';
 import 'package:libra_movie/pages/other_screen.dart';
 import 'package:libra_movie/pages/setting_screen.dart';
 import 'package:libra_movie/pages/tv_screen.dart';
-import 'package:libra_movie/utils/theme_util.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   @override

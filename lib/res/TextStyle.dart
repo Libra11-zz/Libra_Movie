@@ -10,6 +10,8 @@ class TextStyles {
   static const TextStyle textSize16 = const TextStyle(
     fontSize: Dimens.font_sp16,
   );
+  static const TextStyle textSize24 = const TextStyle(
+      fontSize: Dimens.font_sp24, fontWeight: FontWeight.normal);
   static const TextStyle textBold14 =
       const TextStyle(fontSize: Dimens.font_sp14, fontWeight: FontWeight.bold);
   static const TextStyle textBold16 =
@@ -54,6 +56,6 @@ class TextStyles {
       color: Colours.dark_text_gray,
       fontWeight: FontWeight.normal);
 
-  static const TextStyle textHint14 = const TextStyle(
-      fontSize: Dimens.font_sp14, color: Colours.dark_unselected_item_color);
+  static const TextStyle textHint16 = const TextStyle(
+      fontSize: Dimens.font_sp16, color: Colours.dark_unselected_item_color);
 }

@@ -54,6 +54,10 @@ class ThemeProvider extends ChangeNotifier {
             isDarkMode ? TextStyles.textDarkGray12 : TextStyles.textGray12,
       ),
       canvasColor: isDarkMode ? Colours.dark_bg_color : Colours.bg_color,
+      inputDecorationTheme: InputDecorationTheme(
+          hintStyle:
+              isDarkMode ? TextStyles.textHint16 : TextStyles.textDarkGray14,
+          fillColor: Colours.bg_color),
     );
   }
 }

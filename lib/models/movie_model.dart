@@ -30,7 +30,7 @@ class Result {
   String voteCount;
   bool video;
   int id;
-  var voteAvarege;
+  double voteAvarege;
   String title;
   double popularity;
   String posterPath;
@@ -44,9 +44,9 @@ class Result {
     voteCount = result['vote_count'].toString();
     video = result['video'];
     id = result['id'];
-    voteAvarege = result['vote_avarege'];
+    voteAvarege = result['vote_average'].toDouble();
     title = result['title'].toString();
-    popularity = result['popularity'];
+    popularity = result['popularity'].toDouble();
     posterPath = result['poster_path'].toString();
     for (var i = 0; i < result['genre_ids'].length; i++) {
       genreIds.add(result['genre_ids'][i]);
@@ -64,7 +64,7 @@ class Result {
   String get getPosterPath => posterPath;
   double get getPopularity => popularity;
   String get getTitle => title;
-  String get getVoteAvarege => voteAvarege;
+  double get getVoteAvarege => voteAvarege;
   int get getId => id;
   bool get isVideo => video;
   String get getVoteCount => voteCount;

@@ -23,6 +23,7 @@ dependencies:
   provider: 
   flustars:
   dio: ^2.1.14
+  flutter_rating_bar: ^3.0.0+1
   flutter_localizations:
     sdk: flutter
 

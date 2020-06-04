@@ -116,6 +116,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.3"
+  flutter_rating_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_rating_bar
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.1+1"
   flutter_swiper:
     dependency: "direct main"
     description:

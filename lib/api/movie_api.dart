@@ -1,4 +1,4 @@
-import 'package:libra_movie/response/movie_response.dart';
+import 'package:libra_movie/models/movie_model.dart';
 import 'package:dio/dio.dart';
 
 class MovieApi {
@@ -13,13 +13,13 @@ class MovieApi {
   MovieApi() {
     BaseOptions options = new BaseOptions(
       baseUrl: mainUrl,
-      connectTimeout: 15000,
+      connectTimeout: 5000,
       receiveTimeout: 3000,
     );
     dio = new Dio(options);
   }
 
-  Future<MovieResponse> getMovies() async {
+  Future<MovieModel> getMovies() async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': 'en-Us',
@@ -28,11 +28,10 @@ class MovieApi {
     try {
       Response response =
           await dio.request(getPopularUrl, queryParameters: params);
-      print(response.data);
-      return MovieResponse.fromJson(response.data);
+      return MovieModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
-      return MovieResponse.withError(error.toString());
+      return null;
     }
   }
 }
