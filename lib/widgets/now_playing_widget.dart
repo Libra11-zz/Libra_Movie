@@ -68,6 +68,8 @@ class _NowPlayingState extends State<NowPlaying> {
             } else if (snap.data is ContentState) {
               result = contentWidget(context, (snap.data as ContentState).t);
             }
+          } else {
+            result = Container();
           }
           return result;
         });
@@ -75,7 +77,7 @@ class _NowPlayingState extends State<NowPlaying> {
 }
 
 Widget contentWidget(context, data) {
-  return Stack(children: <Widget>[
+  return Column(children: <Widget>[
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
       Text('Now Playing', style: TextStyles.textBold16),
       Container(

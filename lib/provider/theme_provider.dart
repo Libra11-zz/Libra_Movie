@@ -55,6 +55,9 @@ class ThemeProvider extends ChangeNotifier {
       ),
       canvasColor: isDarkMode ? Colours.dark_bg_color : Colours.bg_color,
       cardColor: isDarkMode ? Colours.dark_bg_color : Colours.bg_color,
+      appBarTheme: AppBarTheme(
+        color: isDarkMode ? Colours.dark_bg_color : Colors.orangeAccent,
+      ),
       inputDecorationTheme: InputDecorationTheme(
           hintStyle:
               isDarkMode ? TextStyles.textHint16 : TextStyles.textDarkGray14,

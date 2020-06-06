@@ -69,6 +69,8 @@ class _PopularState extends State<Popular> {
             } else if (snap.data is ContentState) {
               result = contentWidget(context, (snap.data as ContentState).t);
             }
+          } else {
+            result = Container();
           }
           return result;
         });
@@ -76,8 +78,8 @@ class _PopularState extends State<Popular> {
 }
 
 Widget contentWidget(context, data) {
-  return Stack(children: <Widget>[
-    SizedBox(height: 20),
+  return Column(children: <Widget>[
+    SizedBox(height: 10),
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
       Text('Popular', style: TextStyles.textBold16),
       Container(
@@ -103,20 +105,18 @@ Widget contentWidget(context, data) {
     MediaQuery.removePadding(
       removeTop: true,
       context: context,
-      child: Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          // physics: NeverScrollableScrollPhysics(),
-          itemCount: data.results.length,
-          itemBuilder: (BuildContext context, int index) {
-            return MovieItemHorizontal(
-                data.results[index].posterPath,
-                data.results[index].title,
-                data.results[index].overview,
-                data.results[index].voteAvarege);
-          },
-        ),
+      child: ListView.builder(
+        shrinkWrap: true,
+        // scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: data.results.length,
+        itemBuilder: (BuildContext context, int index) {
+          return MovieItemHorizontal(
+              data.results[index].posterPath,
+              data.results[index].title,
+              data.results[index].overview,
+              data.results[index].voteAvarege);
+        },
       ),
     )
   ]);
