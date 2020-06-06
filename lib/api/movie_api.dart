@@ -34,4 +34,20 @@ class MovieApi {
       return null;
     }
   }
+
+  Future<MovieModel> getNowPalying() async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': 'en-Us',
+      'page': 1
+    };
+    try {
+      Response response =
+          await dio.request(getPlayingUrl, queryParameters: params);
+      return MovieModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
 }

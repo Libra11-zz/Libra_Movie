@@ -9,6 +9,7 @@ class MovieItemVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           width: 160.0,

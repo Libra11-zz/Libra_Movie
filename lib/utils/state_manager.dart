@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:libra_movie/state/net_state.dart';
+import 'package:libra_movie/utils/net_state.dart';
 
 class StateManager {
   StreamController<NetState> streamController;
@@ -14,19 +14,15 @@ class StateManager {
     }
   }
 
-  void loadingDialog() {
-    streamController.sink.add(NetShowDialogState());
-  }
-
   void loading() {
-    streamController.sink.add(NetLoadingState());
+    streamController.sink.add(LoadingState());
   }
 
   void error() {
-    streamController.sink.add(NetErrorState());
+    streamController.sink.add(ErrorState());
   }
 
   void content<T>(T t) {
-    streamController.sink.add(NetContentState<T>(t));
+    streamController.sink.add(ContentState<T>(t));
   }
 }
