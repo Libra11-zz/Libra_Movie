@@ -9,18 +9,18 @@ import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
 import 'package:libra_movie/widgets/loading_widget.dart';
-import 'package:libra_movie/widgets/movie_item_vertical.dart';
+import 'package:libra_movie/widgets/movie_item_horizontal.dart';
 
-GlobalKey<_NowPlayingState> nowPlayinglKey = GlobalKey();
+GlobalKey<_TopRatedState> topRatedKey = GlobalKey();
 
-class NowPlaying extends StatefulWidget {
-  NowPlaying({Key key}) : super(key: key);
+class TopRated extends StatefulWidget {
+  TopRated({Key key}) : super(key: key);
 
   @override
-  _NowPlayingState createState() => _NowPlayingState();
+  _TopRatedState createState() => _TopRatedState();
 }
 
-class _NowPlayingState extends State<NowPlaying> {
+class _TopRatedState extends State<TopRated> {
   StreamController<NetState> streamController;
   StateManager stateManager;
   MovieApi movieApi;
@@ -34,7 +34,7 @@ class _NowPlayingState extends State<NowPlaying> {
   }
 
   Future<MovieModel> _loadData() async {
-    MovieModel response = await movieApi.getNowPalying();
+    MovieModel response = await movieApi.getTopRated();
     return response;
   }
 
@@ -81,11 +81,9 @@ class _NowPlayingState extends State<NowPlaying> {
 
 Widget contentWidget(context, data) {
   return Column(children: <Widget>[
-    SizedBox(
-      height: 10,
-    ),
+    SizedBox(height: 10),
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-      Text(AppLocalizations.of(context).translate('NowPlaying'),
+      Text(AppLocalizations.of(context).translate('TopRated'),
           style: TextStyles.textBold16),
       Container(
         child: Row(
@@ -106,17 +104,23 @@ Widget contentWidget(context, data) {
         ),
       )
     ]),
-    SizedBox(height: 10),
-    Container(
-      height: 295,
+    SizedBox(height: 8),
+    MediaQuery.removePadding(
+      removeTop: true,
+      context: context,
       child: ListView.builder(
-        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        // scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
         itemCount: data.results.length,
         itemBuilder: (BuildContext context, int index) {
-          return MovieItemVertical(data.results[index].posterPath,
-              data.results[index].title, data.results[index].voteAvarege);
+          return MovieItemHorizontal(
+              data.results[index].posterPath,
+              data.results[index].title,
+              data.results[index].overview,
+              data.results[index].voteAvarege);
         },
       ),
-    ),
+    )
   ]);
 }

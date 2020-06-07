@@ -3,6 +3,7 @@ import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/widgets/now_playing_widget.dart';
 import 'package:libra_movie/widgets/persons_list_widget.dart';
 import 'package:libra_movie/widgets/popular_widget.dart';
+import 'package:libra_movie/widgets/up_comming_widget.dart';
 
 class MovieScreen extends StatefulWidget {
   MovieScreen({Key key}) : super(key: key);
@@ -23,6 +24,7 @@ class _MovieScreenState extends State<MovieScreen>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(AppLocalizations.of(context).translate('Movie')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
@@ -32,18 +34,26 @@ class _MovieScreenState extends State<MovieScreen>
       body: RefreshIndicator(
         onRefresh: () async {
           // 下拉刷新
+          upcomingKey.currentState.loadData();
           nowPlayinglKey.currentState.loadData();
           popularKey.currentState.loadData();
           personsListKey.currentState.loadData();
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.only(top: 10, left: 10, right: 10),
           child: Column(
             children: <Widget>[
-              NowPlaying(key: nowPlayinglKey),
-              PersonsList(key: personsListKey),
-              Popular(key: popularKey)
+              Upcoming(key: upcomingKey),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: <Widget>[
+                    NowPlaying(key: nowPlayinglKey),
+                    PersonsList(key: personsListKey),
+                    Popular(key: popularKey)
+                  ],
+                ),
+              )
             ],
           ),
         ),

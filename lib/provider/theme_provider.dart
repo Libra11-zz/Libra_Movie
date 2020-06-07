@@ -58,6 +58,10 @@ class ThemeProvider extends ChangeNotifier {
       appBarTheme: AppBarTheme(
         color: isDarkMode ? Colours.dark_bg_color : Colors.orangeAccent,
       ),
+      tabBarTheme: TabBarTheme(
+        unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
+        labelColor: isDarkMode ? Colors.white : Colors.black,
+      ),
       inputDecorationTheme: InputDecorationTheme(
           hintStyle:
               isDarkMode ? TextStyles.textHint16 : TextStyles.textDarkGray14,

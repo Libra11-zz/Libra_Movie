@@ -35,7 +35,7 @@ class Person {
 
   Person(result) {
     id = result['id'];
-    popularity = result['popularity'].toDouble();
+    popularity = result['popularity']?.toDouble();
     name = result['name'];
     profileImg = result['profile_path'];
     known = result['known_for_department'].toString();

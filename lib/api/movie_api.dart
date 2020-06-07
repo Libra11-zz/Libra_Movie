@@ -1,5 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:libra_movie/common/common.dart';
+import 'package:libra_movie/models/genre_model.dart';
 import 'package:libra_movie/models/movie_model.dart';
 import 'package:dio/dio.dart';
 import 'package:libra_movie/models/person_model.dart';
@@ -7,10 +8,12 @@ import 'package:libra_movie/models/person_model.dart';
 class MovieApi {
   final String apiKey = "4e3aff24e8a43ae7d0fda09987f47fe3";
   static String mainUrl = 'https://api.themoviedb.org/3';
-  String getPopularUrl = '/movie/top_rated';
+  String getPopularUrl = '/movie/popular';
+  String getTopRatedUrl = '/movie/top_rated';
   String getUpcomingUrl = '/movie/upcoming';
   String getPlayingUrl = '/movie/now_playing';
-  String getGenresUrl = '';
+  String getMoviesUrl = '/discover/movie';
+  String getGenresUrl = '/genre/movie/list';
   String getPersonsUrl = '/trending/person/week';
   Dio dio;
   String language;
@@ -33,6 +36,22 @@ class MovieApi {
     try {
       Response response =
           await dio.request(getPopularUrl, queryParameters: params);
+      return MovieModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<MovieModel> getTopRated() async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+      'page': 1
+    };
+    try {
+      Response response =
+          await dio.request(getTopRatedUrl, queryParameters: params);
       return MovieModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
@@ -80,6 +99,37 @@ class MovieApi {
     try {
       Response response =
           await dio.request(getUpcomingUrl, queryParameters: params);
+      return MovieModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<GenreModel> getGenre() async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+    };
+    try {
+      Response response =
+          await dio.request(getGenresUrl, queryParameters: params);
+      return GenreModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<MovieModel> getMovieByGenreId(int id) async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+      "with_genres": id
+    };
+    try {
+      Response response =
+          await dio.request(getMoviesUrl, queryParameters: params);
       return MovieModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');

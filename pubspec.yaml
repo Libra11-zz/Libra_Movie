@@ -25,6 +25,7 @@ dependencies:
   dio: ^2.1.14
   page_indicator: ^0.3.0
   font_awesome_flutter: ^8.8.1
+  eva_icons_flutter: ^2.0.0
   flutter_rating_bar: ^3.0.0+1
   flutter_localizations:
     sdk: flutter

@@ -114,21 +114,6 @@ Widget contentWidget(context, data) {
                 SizedBox(
                   height: 10.0,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        stops: [
-                          0.0,
-                          0.9
-                        ],
-                        colors: [
-                          Colors.grey.withOpacity(1.0),
-                          Colors.white.withOpacity(0.0)
-                        ]),
-                  ),
-                ),
                 Positioned(
                     bottom: 0.0,
                     top: 0.0,
@@ -136,7 +121,7 @@ Widget contentWidget(context, data) {
                     right: 0.0,
                     child: Icon(
                       FontAwesomeIcons.playCircle,
-                      color: Colors.white,
+                      color: Colors.orangeAccent,
                       size: 40.0,
                     )),
                 Positioned(
