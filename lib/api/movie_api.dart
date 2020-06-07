@@ -8,7 +8,7 @@ class MovieApi {
   final String apiKey = "4e3aff24e8a43ae7d0fda09987f47fe3";
   static String mainUrl = 'https://api.themoviedb.org/3';
   String getPopularUrl = '/movie/top_rated';
-  String getMoviesUrl = '';
+  String getUpcomingUrl = '/movie/upcoming';
   String getPlayingUrl = '/movie/now_playing';
   String getGenresUrl = '';
   String getPersonsUrl = '/trending/person/week';
@@ -16,7 +16,6 @@ class MovieApi {
   String language;
   MovieApi() {
     language = SpUtil.getString(Constant.language) == 'zh' ? 'zh' : 'en-US';
-    print(language);
     BaseOptions options = new BaseOptions(
       baseUrl: mainUrl,
       connectTimeout: 5000,
@@ -66,6 +65,22 @@ class MovieApi {
       Response response =
           await dio.request(getPersonsUrl, queryParameters: params);
       return PersonModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<MovieModel> getUpcoming() async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+      'page': 1
+    };
+    try {
+      Response response =
+          await dio.request(getUpcomingUrl, queryParameters: params);
+      return MovieModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
       return null;

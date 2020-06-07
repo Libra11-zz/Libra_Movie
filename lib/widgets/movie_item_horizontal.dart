@@ -3,10 +3,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:libra_movie/res/TextStyle.dart';
 
 class MovieItemHorizontal extends StatelessWidget {
-  String src;
-  String title;
-  double rate;
-  String desc;
+  final String src;
+  final String title;
+  final double rate;
+  final String desc;
   MovieItemHorizontal(this.src, this.title, this.desc, this.rate);
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ class MovieItemHorizontal extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       RatingBar(
+                        onRatingUpdate: (_) {},
                         initialRating: rate / 2,
                         direction: Axis.horizontal,
                         allowHalfRating: true,

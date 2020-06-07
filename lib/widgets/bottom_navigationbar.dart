@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:libra_movie/localization/app_localization.dart';
+import 'package:libra_movie/pages/category_screen.dart';
 import 'package:libra_movie/pages/movie_screen.dart';
 import 'package:libra_movie/pages/other_screen.dart';
 import 'package:libra_movie/pages/setting_screen.dart';
-import 'package:libra_movie/pages/tv_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         PageController(initialPage: _currentIndex, keepPage: true);
     pages
       ..add(MovieScreen())
-      ..add(TVScreen())
+      ..add(CategoryScreen())
       ..add(OtherScreen())
       ..add(SettingScreen());
   }
@@ -35,21 +35,21 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.movie_filter,
+                  Icons.home,
                 ),
                 title: Text(
                   AppLocalizations.of(context).translate('Home'),
                 )),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.live_tv,
+                  Icons.category,
                 ),
                 title: Text(
-                  AppLocalizations.of(context).translate('TV'),
+                  AppLocalizations.of(context).translate('Category'),
                 )),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.devices_other,
+                  Icons.search,
                 ),
                 title: Text(
                   AppLocalizations.of(context).translate('Search'),

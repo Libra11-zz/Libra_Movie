@@ -142,10 +142,8 @@ Widget contentWidget(context, data) {
                       style: TextStyle(
                           height: 1.4,
                           fontWeight: FontWeight.bold,
-                          fontSize: 9.0)),
+                          fontSize: 12.0)),
                   SizedBox(height: 3.0),
-                  // Text("Trending for ${data.results[index].known}",
-                  //     style: TextStyle(fontWeight: FontWeight.w400))
                 ]),
           );
         },
