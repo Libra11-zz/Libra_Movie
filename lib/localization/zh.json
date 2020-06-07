@@ -3,5 +3,9 @@
   "Home": "主页",
   "Search": "搜索",
   "TV": "电视",
-  "SKIP": "跳过"
+  "SKIP": "跳过",
+  "Movie": "电影",
+  "NowPlaying": "正在上映",
+  "All": "全部",
+  "Popular": "热门"
 }

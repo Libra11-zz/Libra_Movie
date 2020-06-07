@@ -3,5 +3,9 @@
   "Home": "Home",
   "Search": "Search",
   "TV": "TV",
-  "SKIP": "Skip"
+  "SKIP": "Skip",
+  "Movie": "Movie",
+  "NowPlaying": "Now Playing",
+  "All": "All",
+  "Popular": "Popular"
 }

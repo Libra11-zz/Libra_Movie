@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
+import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/models/movie_model.dart';
 import 'package:libra_movie/res/TextStyle.dart';
 import 'package:libra_movie/utils/net_state.dart';
@@ -9,6 +10,8 @@ import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
 import 'package:libra_movie/widgets/loading_widget.dart';
 import 'package:libra_movie/widgets/movie_item_vertical.dart';
+
+GlobalKey<_NowPlayingState> nowPlayinglKey = GlobalKey();
 
 class NowPlaying extends StatefulWidget {
   NowPlaying({Key key}) : super(key: key);
@@ -79,12 +82,13 @@ class _NowPlayingState extends State<NowPlaying> {
 Widget contentWidget(context, data) {
   return Column(children: <Widget>[
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-      Text('Now Playing', style: TextStyles.textBold16),
+      Text(AppLocalizations.of(context).translate('NowPlaying'),
+          style: TextStyles.textBold16),
       Container(
         child: Row(
           children: <Widget>[
             Text(
-              'All ',
+              '${AppLocalizations.of(context).translate('All')} ',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).textTheme.title.color),

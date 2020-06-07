@@ -1,3 +1,5 @@
+import 'package:flustars/flustars.dart';
+import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/models/movie_model.dart';
 import 'package:dio/dio.dart';
 
@@ -10,7 +12,10 @@ class MovieApi {
   String getGenresUrl = '';
   String getPersonsUrl = '';
   Dio dio;
+  String language;
   MovieApi() {
+    language = SpUtil.getString(Constant.language) == 'zh' ? 'zh' : 'en-US';
+    print(language);
     BaseOptions options = new BaseOptions(
       baseUrl: mainUrl,
       connectTimeout: 5000,
@@ -22,7 +27,7 @@ class MovieApi {
   Future<MovieModel> getMovies() async {
     Map<String, Object> params = {
       'api_key': apiKey,
-      'language': 'en-Us',
+      'language': language,
       'page': 1
     };
     try {
@@ -38,7 +43,7 @@ class MovieApi {
   Future<MovieModel> getNowPalying() async {
     Map<String, Object> params = {
       'api_key': apiKey,
-      'language': 'en-Us',
+      'language': language,
       'page': 1
     };
     try {
