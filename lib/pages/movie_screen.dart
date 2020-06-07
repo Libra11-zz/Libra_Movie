@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:libra_movie/widgets/now_playing_widget.dart';
 import 'package:libra_movie/widgets/popular_widget.dart';
 
-Color firstColor = Color(0xFFF47D15);
-TextStyle dropDownMenuItemStyle =
-    TextStyle(color: Colors.white, fontSize: 16.0);
-
 class MovieScreen extends StatefulWidget {
   MovieScreen({Key key}) : super(key: key);
   @override
   _MovieScreenState createState() => _MovieScreenState();
 }
 
-class _MovieScreenState extends State<MovieScreen> {
+// AutomaticKeepAliveClientMixin 保持页面状态  防止页面切换重新刷新
+class _MovieScreenState extends State<MovieScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -36,4 +34,7 @@ class _MovieScreenState extends State<MovieScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

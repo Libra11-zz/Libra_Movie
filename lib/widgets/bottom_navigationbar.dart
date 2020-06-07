@@ -13,10 +13,12 @@ class BottomNavigationWidget extends StatefulWidget {
 class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   List<Widget> pages = List<Widget>();
   int _currentIndex = 0;
-
+  PageController _pageController;
   @override
   void initState() {
     super.initState();
+    _pageController =
+        PageController(initialPage: _currentIndex, keepPage: true);
     pages
       ..add(MovieScreen())
       ..add(TVScreen())
@@ -64,9 +66,13 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           onTap: (int index) {
             setState(() {
               _currentIndex = index;
+              _pageController.jumpToPage(index);
             });
           },
         ),
-        body: pages[_currentIndex]);
+        body: PageView(
+          controller: _pageController,
+          children: this.pages,
+        ));
   }
 }

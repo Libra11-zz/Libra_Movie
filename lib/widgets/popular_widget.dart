@@ -9,7 +9,6 @@ import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
 import 'package:libra_movie/widgets/loading_widget.dart';
 import 'package:libra_movie/widgets/movie_item_horizontal.dart';
-import 'package:libra_movie/widgets/movie_item_vertical.dart';
 
 class Popular extends StatefulWidget {
   Popular({Key key}) : super(key: key);
