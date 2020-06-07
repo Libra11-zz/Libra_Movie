@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/widgets/now_playing_widget.dart';
+import 'package:libra_movie/widgets/persons_list_widget.dart';
 import 'package:libra_movie/widgets/popular_widget.dart';
 
 class MovieScreen extends StatefulWidget {
@@ -33,6 +34,7 @@ class _MovieScreenState extends State<MovieScreen>
           // 下拉刷新
           nowPlayinglKey.currentState.loadData();
           popularKey.currentState.loadData();
+          personsListKey.currentState.loadData();
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
@@ -40,6 +42,7 @@ class _MovieScreenState extends State<MovieScreen>
           child: Column(
             children: <Widget>[
               NowPlaying(key: nowPlayinglKey),
+              PersonsList(key: personsListKey),
               Popular(key: popularKey)
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flustars/flustars.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/models/movie_model.dart';
 import 'package:dio/dio.dart';
+import 'package:libra_movie/models/person_model.dart';
 
 class MovieApi {
   final String apiKey = "4e3aff24e8a43ae7d0fda09987f47fe3";
@@ -10,7 +11,7 @@ class MovieApi {
   String getMoviesUrl = '';
   String getPlayingUrl = '/movie/now_playing';
   String getGenresUrl = '';
-  String getPersonsUrl = '';
+  String getPersonsUrl = '/trending/person/week';
   Dio dio;
   String language;
   MovieApi() {
@@ -50,6 +51,21 @@ class MovieApi {
       Response response =
           await dio.request(getPlayingUrl, queryParameters: params);
       return MovieModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<PersonModel> getPersons() async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+    };
+    try {
+      Response response =
+          await dio.request(getPersonsUrl, queryParameters: params);
+      return PersonModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
       return null;
