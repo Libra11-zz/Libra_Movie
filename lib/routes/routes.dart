@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:libra_movie/pages/movie_detail_screen.dart';
 import 'package:libra_movie/pages/splash_screen.dart';
 import 'package:libra_movie/widgets/bottom_navigationbar.dart';
 
 final routes = {
   "/splash": (context) => SplashScreen(),
   "/main": (context) => BottomNavigationWidget(),
+  "/movieDetail": (context, movie) => MovieDetailScreen(movie: movie),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

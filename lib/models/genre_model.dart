@@ -20,6 +20,9 @@ class Genre {
     name = result['name'];
   }
 
+  Genre.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        name = json["name"];
   int get getId => id;
   String get getName => name;
 }

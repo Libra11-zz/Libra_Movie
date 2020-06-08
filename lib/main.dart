@@ -1,12 +1,10 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/provider/language_provider.dart';
 import 'package:libra_movie/provider/theme_provider.dart';
 import 'package:libra_movie/routes/routes.dart';
-import 'package:libra_movie/utils/theme_util.dart';
 import 'package:libra_movie/widgets/restart_widget.dart';
 import 'package:provider/provider.dart';
 

@@ -105,13 +105,12 @@ Widget contentWidget(context, data) {
     SizedBox(height: 8),
     Container(
       height: 116,
-      padding: EdgeInsets.only(left: 10),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: data.results.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            padding: EdgeInsets.only(top: 10, left: 8.0),
+            padding: EdgeInsets.only(top: 10, right: 10),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
@@ -142,7 +141,7 @@ Widget contentWidget(context, data) {
                       style: TextStyle(
                           height: 1.4,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.0)),
+                          fontSize: 10.0)),
                   SizedBox(height: 3.0),
                 ]),
           );

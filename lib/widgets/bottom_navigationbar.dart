@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/pages/category_screen.dart';
 import 'package:libra_movie/pages/movie_screen.dart';
-import 'package:libra_movie/pages/other_screen.dart';
+import 'package:libra_movie/pages/search_screen.dart';
 import 'package:libra_movie/pages/setting_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
@@ -22,7 +22,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     pages
       ..add(MovieScreen())
       ..add(CategoryScreen())
-      ..add(OtherScreen())
+      ..add(SearchScreen())
       ..add(SettingScreen());
   }
 

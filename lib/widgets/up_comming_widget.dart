@@ -94,7 +94,10 @@ Widget contentWidget(context, data) {
         itemCount: data.results.take(5).length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/movieDetail',
+                  arguments: {'movie': data.results[index]});
+            },
             child: Stack(
               children: <Widget>[
                 Hero(
