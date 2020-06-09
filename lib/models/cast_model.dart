@@ -15,22 +15,22 @@ class Cast {
   int id;
   String character;
   String name;
-  String img;
+  String profileImg;
 
   Cast(result) {
-    id = result["cast_id"];
+    id = result["id"];
     character = result["character"];
     name = result["name"];
-    img = result["profile_path"];
+    profileImg = result["profile_path"];
   }
 
   Cast.fromJson(Map<String, dynamic> json)
-      : id = json["cast_id"],
+      : id = json["id"],
         character = json["character"],
         name = json["name"],
-        img = json["profile_path"];
+        profileImg = json["profile_path"];
   int get getId => id;
   String get getName => name;
   String get getCharacter => character;
-  String get getimg => img;
+  String get getProfileImg => profileImg;
 }

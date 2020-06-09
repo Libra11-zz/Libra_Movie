@@ -17,5 +17,10 @@
   "Released": "RELEASE DATE",
   "Genres": "GENRES",
   "Similar": "SIMILAR",
-  "min": "min"
+  "min": "min",
+  "Masterpiece": "Masterpiece",
+  "Born": "Born",
+  "Nationality": "Nationality",
+  "Popularity": "Popularity",
+  "Known": "Known"
 }

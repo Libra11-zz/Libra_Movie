@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
+import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/models/person_video_model.dart';
 import 'package:libra_movie/pages/movie_detail_screen.dart';
 import 'package:libra_movie/res/TextStyle.dart';
@@ -87,7 +88,8 @@ Widget contentWidget(context, data) {
         height: 10,
       ),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-        Text('代表作', style: TextStyles.textBold16),
+        Text(AppLocalizations.of(context).translate('Masterpiece'),
+            style: TextStyles.textBold16),
       ]),
       SizedBox(height: 10),
       Container(

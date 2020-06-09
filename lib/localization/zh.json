@@ -17,5 +17,10 @@
   "Released": "上映日期",
   "Genres": "类型",
   "Similar": "相似",
-  "min": "分钟"
+  "min": "分钟",
+  "Masterpiece": "代表作",
+  "Born": "出生",
+  "Nationality": "国籍",
+  "Popularity": "热度",
+  "Known": "主演类型"
 }

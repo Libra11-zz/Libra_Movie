@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
+import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/models/person_detail.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
-import 'package:libra_movie/widgets/fade_animations.dart';
 
 import 'loading_widget.dart';
 
@@ -85,13 +85,15 @@ Widget contentWidget(context, data) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "简介",
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          AppLocalizations.of(context).translate('Overview'),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 10,
         ),
         Text(
           data.biography,
-          style: TextStyle(color: Colors.grey, height: 1.4),
+          style: TextStyle(height: 1.4),
         ),
         SizedBox(
           height: 40,
@@ -103,18 +105,14 @@ Widget contentWidget(context, data) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Born",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context).translate('Born'),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
                     data.birthday,
-                    style: TextStyle(color: Colors.grey),
                   ),
                 ],
               ),
@@ -122,18 +120,14 @@ Widget contentWidget(context, data) {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    "Nationality",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context).translate('Nationality'),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
                     data.birth,
-                    style: TextStyle(color: Colors.grey),
                   ),
                 ],
               ),
@@ -148,18 +142,14 @@ Widget contentWidget(context, data) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Popularity",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context).translate('Popularity'),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
                     data.popularity.toString(),
-                    style: TextStyle(color: Colors.grey),
                   ),
                 ],
               ),
@@ -167,18 +157,14 @@ Widget contentWidget(context, data) {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    "Known",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context).translate('Known'),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
                     data.known,
-                    style: TextStyle(color: Colors.grey),
                   ),
                 ],
               ),

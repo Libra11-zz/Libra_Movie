@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/models/cast_model.dart';
+import 'package:libra_movie/pages/actor_detail_screen.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
@@ -88,11 +89,18 @@ Widget contentWidget(context, data) {
           padding: EdgeInsets.only(top: 10.0, right: 8.0),
           width: 100.0,
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ActorDetail(
+                            actor: data.results[index],
+                          )));
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                data.results[index].img == null
+                data.results[index].profileImg == null
                     ? Hero(
                         tag: data.results[index].id,
                         child: Container(
@@ -118,7 +126,7 @@ Widget contentWidget(context, data) {
                                   fit: BoxFit.cover,
                                   image: NetworkImage(
                                       "https://image.tmdb.org/t/p/w300/" +
-                                          data.results[index].img)),
+                                          data.results[index].profileImg)),
                             )),
                       ),
                 SizedBox(
