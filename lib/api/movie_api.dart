@@ -5,7 +5,9 @@ import 'package:libra_movie/models/genre_model.dart';
 import 'package:libra_movie/models/movie_detail_model.dart';
 import 'package:libra_movie/models/movie_model.dart';
 import 'package:dio/dio.dart';
+import 'package:libra_movie/models/person_detail.dart';
 import 'package:libra_movie/models/person_model.dart';
+import 'package:libra_movie/models/person_video_model.dart';
 import 'package:libra_movie/models/video_model.dart';
 
 class MovieApi {
@@ -19,6 +21,7 @@ class MovieApi {
   String getGenresUrl = '/genre/movie/list';
   String getPersonsUrl = '/trending/person/week';
   String getMovieUrl = '/movie';
+  String getPersonDetailUrl = '/person';
   Dio dio;
   String language;
   MovieApi() {
@@ -195,6 +198,37 @@ class MovieApi {
       Response response =
           await dio.request('$getMovieUrl/$id/videos', queryParameters: params);
       return VideoModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<PersonDetail> getPersonDetail(int id) async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+    };
+    try {
+      Response response =
+          await dio.request('$getPersonDetailUrl/$id', queryParameters: params);
+      return PersonDetail.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<PersonVideoModel> getPersonVideo(int id) async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+    };
+    try {
+      Response response = await dio.request(
+          '$getPersonDetailUrl/$id/movie_credits',
+          queryParameters: params);
+      return PersonVideoModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
       return null;

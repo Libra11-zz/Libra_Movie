@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:libra_movie/localization/app_localization.dart';
-import 'package:libra_movie/models/movie_model.dart';
+import 'package:libra_movie/models/result_model.dart';
 import 'package:libra_movie/widgets/casts_widget.dart';
 import 'package:libra_movie/widgets/movie_detail_widget.dart';
 import 'package:libra_movie/widgets/movie_info_widget.dart';
