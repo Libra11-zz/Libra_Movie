@@ -22,5 +22,8 @@
   "Born": "Born",
   "Nationality": "Nationality",
   "Popularity": "Popularity",
-  "Known": "Known"
+  "Known": "Known",
+  "Open": "Open",
+  "Close": "Close",
+  "System": "Follow system"
 }

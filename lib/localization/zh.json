@@ -22,5 +22,8 @@
   "Born": "出生",
   "Nationality": "国籍",
   "Popularity": "热度",
-  "Known": "主演类型"
+  "Known": "主演类型",
+  "Open": "打开",
+  "Close": "关闭",
+  "System": "跟随系统"
 }

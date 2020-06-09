@@ -1,12 +1,10 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:libra_movie/common/common.dart';
-import 'package:libra_movie/provider/language_provider.dart';
-import 'package:libra_movie/provider/theme_provider.dart';
-import 'package:libra_movie/utils/theme_util.dart';
-import 'package:libra_movie/widgets/restart_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:libra_movie/localization/app_localization.dart';
+import 'package:libra_movie/pages/language_screen.dart';
+import 'package:libra_movie/pages/theme_screen.dart';
+import 'package:libra_movie/widgets/setting_item.dart';
 
 class SettingScreen extends StatefulWidget {
   SettingScreen({Key key}) : super(key: key);
@@ -16,90 +14,94 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  var _list = ['跟随系统', '开启', '关闭'];
-  String language = SpUtil.getString(Constant.language);
+  String languageStr;
+  String themeStr;
+
+  @override
+  void initState() {
+    super.initState();
+    initLanguage();
+    initTheme();
+  }
+
+  initLanguage() {
+    String language = SpUtil.getString(Constant.language);
+    switch (language) {
+      case 'zh':
+        languageStr = "简体中文";
+        break;
+      case 'en':
+        languageStr = "English";
+        break;
+      case 'System':
+        languageStr = AppLocalizations.of(context).translate('System');
+        break;
+    }
+  }
+
+  initTheme() {
+    String theme = SpUtil.getString(Constant.theme);
+    switch (theme) {
+      case 'Dark':
+        themeStr = AppLocalizations.of(context).translate('Open');
+        break;
+      case 'Light':
+        themeStr = AppLocalizations.of(context).translate('Close');
+        break;
+      default:
+        themeStr = AppLocalizations.of(context).translate('System');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    String theme = SpUtil.getString(Constant.theme);
-    String themeModeString = _list[2];
-    switch (theme) {
-      case 'Dark':
-        themeModeString = _list[1];
-        break;
-      case 'Light':
-        themeModeString = _list[2];
-        break;
-      default:
-        themeModeString = _list[0];
-        break;
-    }
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: _list.length,
-                  itemExtent: 50.0, //强制高度为50.0
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                        onTap: () {
-                          ThemeMode themeMode = index == 0
-                              ? ThemeMode.system
-                              : (index == 1 ? ThemeMode.dark : ThemeMode.light);
-                          setState(() {
-                            themeModeString = _list[index];
-                          });
-                          Provider.of<ThemeProvider>(context, listen: false)
-                              .setTheme(themeMode);
-                          // 更新status bar颜色
-                          ThemeUtils.setStatusBar(context);
-                        },
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          height: 50.0,
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Text(_list[index]),
-                              ),
-                              Opacity(
-                                  opacity:
-                                      themeModeString == _list[index] ? 1 : 0,
-                                  child: Icon(Icons.done,
-                                      color: Colors.orangeAccent))
-                            ],
-                          ),
-                        ));
-                  })),
-          Container(
-            child: DropdownButton(
-                hint: new Text(language),
-                items: [
-                  DropdownMenuItem(
-                    value: 'zh',
-                    child: Text('zh'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'en',
-                    child: Text('en'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'System',
-                    child: Text('跟随系统'),
-                  )
-                ],
-                onChanged: (value) {
-                  Provider.of<LanguageProvider>(context, listen: false)
-                      .changeLanguage(Locale(value));
-                  RestartWidget.restartApp(context);
-                }),
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).translate('Settings')),
+        ),
+        body: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            SettingItem(
+              icon: Icon(Icons.language),
+              text: '语言',
+              text2: languageStr,
+              callBack: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LanguageScreen()));
+              },
+            ),
+            SettingItem(
+              icon: Icon(Icons.dashboard),
+              text: '夜间模式',
+              text2: themeStr,
+              callBack: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ThemeScreen()));
+              },
+            ),
+            SettingItem(
+              icon: Icon(Icons.golf_course),
+              text: '项目地址',
+              text2: "",
+              callBack: () {},
+            ),
+            SettingItem(
+              icon: Icon(Icons.contact_phone),
+              text: '联系我',
+              text2: "",
+              callBack: () {},
+            ),
+            SettingItem(
+              icon: Icon(Icons.verified_user),
+              text: '版本号',
+              text2: "1.0.0",
+              callBack: () {},
+            ),
+          ],
+        ));
   }
 }
