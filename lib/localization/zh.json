@@ -10,5 +10,12 @@
   "Popular": "热门",
   "More": "更多",
   "Person": "演员 导演",
-  "TopRated": "高评分"
+  "TopRated": "高评分",
+  "Overview": "简介",
+  "Budget": "预算",
+  "Duration": "时长",
+  "Released": "上映日期",
+  "Genres": "类型",
+  "Similar": "相似",
+  "min": "分钟"
 }

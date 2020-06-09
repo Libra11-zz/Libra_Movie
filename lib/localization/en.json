@@ -10,5 +10,12 @@
   "Popular": "Popular",
   "More": "More",
   "Person": "Actor Director",
-  "TopRated": "Top Rated"
+  "TopRated": "Top Rated",
+  "Overview": "OVERVIEW",
+  "Budget": "BUDGET",
+  "Duration": "DURATION",
+  "Released": "RELEASE DATE",
+  "Genres": "GENRES",
+  "Similar": "SIMILAR",
+  "min": "min"
 }

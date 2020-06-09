@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/models/movie_model.dart';
+import 'package:libra_movie/pages/movie_detail_screen.dart';
 import 'package:libra_movie/res/TextStyle.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
@@ -113,8 +114,17 @@ Widget contentWidget(context, data) {
         scrollDirection: Axis.horizontal,
         itemCount: data.results.length,
         itemBuilder: (BuildContext context, int index) {
-          return MovieItemVertical(data.results[index].posterPath,
-              data.results[index].title, data.results[index].voteAvarege);
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MovieDetailScreen(movie: data.results[index])));
+            },
+            child: MovieItemVertical(data.results[index].posterPath,
+                data.results[index].title, data.results[index].voteAvarege),
+          );
         },
       ),
     ),

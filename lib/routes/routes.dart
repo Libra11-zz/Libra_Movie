@@ -6,7 +6,7 @@ import 'package:libra_movie/widgets/bottom_navigationbar.dart';
 final routes = {
   "/splash": (context) => SplashScreen(),
   "/main": (context) => BottomNavigationWidget(),
-  "/movieDetail": (context, movie) => MovieDetailScreen(movie: movie),
+  "/movieDetail": (context, {arguments}) => MovieDetailScreen(movie: arguments),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

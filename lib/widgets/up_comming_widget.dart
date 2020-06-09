@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/models/movie_model.dart';
+import 'package:libra_movie/pages/movie_detail_screen.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
@@ -95,8 +96,11 @@ Widget contentWidget(context, data) {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/movieDetail',
-                  arguments: {'movie': data.results[index]});
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MovieDetailScreen(movie: data.results[index])));
             },
             child: Stack(
               children: <Widget>[

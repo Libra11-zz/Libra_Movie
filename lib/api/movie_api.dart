@@ -156,7 +156,7 @@ class MovieApi {
     }
   }
 
-  Future<Cast> getCasts(int id) async {
+  Future<CastModel> getCasts(int id) async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': language,
@@ -164,7 +164,7 @@ class MovieApi {
     try {
       Response response = await dio.request('$getMovieUrl/$id/credits',
           queryParameters: params);
-      return Cast.fromJson(response.data);
+      return CastModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
       return null;
@@ -186,7 +186,7 @@ class MovieApi {
     }
   }
 
-  Future<Video> getVideos(int id) async {
+  Future<VideoModel> getVideos(int id) async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': language,
@@ -194,7 +194,7 @@ class MovieApi {
     try {
       Response response =
           await dio.request('$getMovieUrl/$id/videos', queryParameters: params);
-      return Video.fromJson(response.data);
+      return VideoModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
       return null;

@@ -1,16 +1,42 @@
+class VideoModel {
+  int id;
+  List<Video> videos = [];
+  VideoModel({this.id, this.videos});
+
+  VideoModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    for (var i = 0; i < json['results'].length; i++) {
+      Video result = Video(json['results'][i]);
+      videos.add(result);
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['results'] = this.videos;
+    return data;
+  }
+}
+
 class Video {
-  final String id;
-  final String key;
-  final String name;
-  final String site;
-  final String type;
+  String id;
+  String key;
+  String name;
+  String site;
+  String type;
 
-  Video(this.id, this.key, this.name, this.site, this.type);
+  Video(result) {
+    id = result['id'];
+    key = result['key'];
+    type = result['type'];
+    name = result['name'];
+    site = result['site'];
+  }
 
-  Video.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        key = json["key"],
-        name = json["name"],
-        site = json["site"],
-        type = json["type"];
+  String get getId => id;
+  String get getName => name;
+  String get getKey => key;
+  String get getType => type;
+  String get getSite => site;
 }

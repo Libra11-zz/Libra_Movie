@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/models/person_model.dart';
+import 'package:libra_movie/pages/actor_detail_screen.dart';
 import 'package:libra_movie/res/TextStyle.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
@@ -109,41 +110,51 @@ Widget contentWidget(context, data) {
         scrollDirection: Axis.horizontal,
         itemCount: data.results.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            padding: EdgeInsets.only(top: 10, right: 10),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  data.results[index].profileImg == null
-                      ? Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
-                          child: Icon(Icons.verified_user),
-                        )
-                      : Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://image.tmdb.org/t/p/w200" +
-                                          data.results[index].profileImg),
-                                  fit: BoxFit.cover)),
-                        ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(data.results[index].name,
-                      maxLines: 2,
-                      style: TextStyle(
-                          height: 1.4,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10.0)),
-                  SizedBox(height: 3.0),
-                ]),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ActorDetail(
+                            actor: data.results[index],
+                          )));
+            },
+            child: Container(
+              padding: EdgeInsets.only(top: 10, right: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    data.results[index].profileImg == null
+                        ? Container(
+                            width: 70.0,
+                            height: 70.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.grey),
+                            child: Icon(Icons.verified_user),
+                          )
+                        : Container(
+                            width: 70.0,
+                            height: 70.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        "https://image.tmdb.org/t/p/w200" +
+                                            data.results[index].profileImg),
+                                    fit: BoxFit.cover)),
+                          ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(data.results[index].name,
+                        maxLines: 2,
+                        style: TextStyle(
+                            height: 1.4,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10.0)),
+                    SizedBox(height: 3.0),
+                  ]),
+            ),
           );
         },
       ),

@@ -1,5 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/provider/language_provider.dart';
@@ -13,6 +14,11 @@ import 'localization/app_localization.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtil.getInstance();
+  // 更改statusbar的背景色为透明色
+  SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  );
+  SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   runApp(RestartWidget(child: MyApp()));
 }
 

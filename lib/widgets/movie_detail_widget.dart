@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/models/video_model.dart';
+import 'package:libra_movie/pages/video_player_screen.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
 import 'package:libra_movie/widgets/loading_widget.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailWidget extends StatefulWidget {
   final int movieId;
@@ -30,8 +32,9 @@ class _MovieDetailWidgetState extends State<MovieDetailWidget> {
     loadData();
   }
 
-  Future<Video> _loadData() async {
-    Video response = await movieApi.getVideos(movieId);
+  Future<VideoModel> _loadData() async {
+    VideoModel response = await movieApi.getVideos(movieId);
+    print(response);
     return response;
   }
 
@@ -77,5 +80,27 @@ class _MovieDetailWidgetState extends State<MovieDetailWidget> {
 }
 
 Widget contentWidget(context, data) {
-  return Container();
+  return FloatingActionButton(
+    backgroundColor: Colors.orangeAccent,
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VideoPlayerScreen(
+            controller: YoutubePlayerController(
+              initialVideoId: data.videos[0].key,
+              flags: YoutubePlayerFlags(
+                autoPlay: true,
+                mute: true,
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+    child: Icon(
+      Icons.play_arrow,
+      color: Colors.white,
+    ),
+  );
 }

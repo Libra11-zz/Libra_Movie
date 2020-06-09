@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/models/movie_model.dart';
+import 'package:libra_movie/pages/movie_detail_screen.dart';
 import 'package:libra_movie/utils/net_state.dart';
 import 'package:libra_movie/utils/state_manager.dart';
 import 'package:libra_movie/widgets/error_widget.dart';
@@ -89,7 +90,13 @@ Widget contentWidget(context, data) {
         return Padding(
           padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 15.0),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MovieDetailScreen(movie: data.results[index])));
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
