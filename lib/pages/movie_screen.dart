@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:libra_movie/localization/app_localization.dart';
+import 'package:libra_movie/pages/input_search_screen.dart';
 import 'package:libra_movie/widgets/now_playing_widget.dart';
 import 'package:libra_movie/widgets/persons_list_widget.dart';
 import 'package:libra_movie/widgets/popular_widget.dart';
@@ -28,7 +29,11 @@ class _MovieScreenState extends State<MovieScreen>
         title: Text(AppLocalizations.of(context).translate('Movie')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.search))
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: InputSearchScreen());
+              },
+              icon: Icon(Icons.search))
         ],
       ),
       body: RefreshIndicator(

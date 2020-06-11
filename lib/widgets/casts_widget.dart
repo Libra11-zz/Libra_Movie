@@ -53,6 +53,7 @@ class _CastsState extends State<Casts> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

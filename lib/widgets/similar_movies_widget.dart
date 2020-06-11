@@ -55,6 +55,7 @@ class _SimilarMoviesState extends State<SimilarMovies> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

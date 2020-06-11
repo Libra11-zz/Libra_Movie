@@ -22,6 +22,7 @@ class MovieApi {
   String getPersonsUrl = '/trending/person/week';
   String getMovieUrl = '/movie';
   String getPersonDetailUrl = '/person';
+  String getSearchMovieUrl = 'search/movie';
   Dio dio;
   String language;
   MovieApi() {
@@ -230,6 +231,22 @@ class MovieApi {
           '$getPersonDetailUrl/$id/movie_credits',
           queryParameters: params);
       return PersonVideoModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<MovieModel> getSearchMovie(String query) async {
+    Map<String, Object> params = {
+      'api_key': apiKey,
+      'language': language,
+      'query': query
+    };
+    try {
+      Response response =
+          await dio.request(getSearchMovieUrl, queryParameters: params);
+      return MovieModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');
       return null;

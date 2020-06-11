@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:libra_movie/models/genre_model.dart';
-import 'package:libra_movie/res/Colors.dart';
 import 'package:libra_movie/widgets/genre_movie_widget.dart';
 
 class GenresList extends StatefulWidget {

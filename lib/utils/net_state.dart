@@ -1,5 +1,3 @@
-import 'package:libra_movie/models/movie_model.dart';
-
 class NetState {}
 
 class LoadingState extends NetState {}

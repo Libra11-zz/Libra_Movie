@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:libra_movie/localization/app_localization.dart';
+import 'package:libra_movie/pages/input_search_screen.dart';
 import 'package:libra_movie/widgets/genre_widget.dart';
 import 'package:libra_movie/widgets/top_rated_widget.dart';
 
@@ -21,7 +22,11 @@ class _CategoryScreenState extends State<CategoryScreen>
         title: Text(AppLocalizations.of(context).translate('Category')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.search))
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: InputSearchScreen());
+              },
+              icon: Icon(Icons.search))
         ],
       ),
       body: RefreshIndicator(

@@ -53,6 +53,7 @@ class _PersonDetailWidgetState extends State<PersonDetailWidget> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

@@ -9,20 +9,22 @@ final routes = {
   "/movieDetail": (context, {arguments}) => MovieDetailScreen(movie: arguments),
 };
 
-var onGenerateRoute = (RouteSettings settings) {
+RouteFactory onGenerateRoute = (RouteSettings settings) {
   // 统一处理
   final String name = settings.name;
   final Function pageContentBuilder = routes[name];
+  Route route;
   if (pageContentBuilder != null) {
     if (settings.arguments != null) {
-      final Route route = MaterialPageRoute(
+      route = MaterialPageRoute(
           builder: (context) =>
               pageContentBuilder(context, arguments: settings.arguments));
       return route;
     } else {
-      final Route route =
+      route =
           MaterialPageRoute(builder: (context) => pageContentBuilder(context));
       return route;
     }
   }
+  return route;
 };

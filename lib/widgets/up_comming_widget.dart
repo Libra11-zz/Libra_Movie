@@ -54,6 +54,7 @@ class _UpcomingState extends State<Upcoming> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

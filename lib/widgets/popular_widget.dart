@@ -56,6 +56,7 @@ class _PopularState extends State<Popular> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

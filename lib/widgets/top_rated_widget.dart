@@ -56,6 +56,7 @@ class _TopRatedState extends State<TopRated> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

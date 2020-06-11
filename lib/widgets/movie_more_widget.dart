@@ -122,6 +122,7 @@ class _MovieMoreWidgetState extends State<MovieMoreWidget> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

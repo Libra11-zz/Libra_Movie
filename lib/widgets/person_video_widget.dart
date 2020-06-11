@@ -55,6 +55,7 @@ class _PersonVideoState extends State<PersonVideo> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

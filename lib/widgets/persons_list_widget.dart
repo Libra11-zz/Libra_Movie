@@ -55,6 +55,7 @@ class _PersonsListState extends State<PersonsList> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

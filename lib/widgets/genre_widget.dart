@@ -50,6 +50,7 @@ class _GenresScreenState extends State<GenresScreen> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

@@ -4,7 +4,7 @@ class SettingItem extends StatefulWidget {
   final Icon icon;
   final String text;
   final String text2;
-  Function callBack;
+  final Function callBack;
 
   SettingItem(
       {Key key,

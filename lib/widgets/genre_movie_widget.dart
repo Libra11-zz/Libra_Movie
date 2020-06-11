@@ -54,6 +54,7 @@ class _GenreMovieState extends State<GenreMovie> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

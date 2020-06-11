@@ -56,6 +56,7 @@ class _NowPlayingState extends State<NowPlaying> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

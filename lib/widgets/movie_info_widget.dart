@@ -52,6 +52,7 @@ class _MovieInfoState extends State<MovieInfo> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 

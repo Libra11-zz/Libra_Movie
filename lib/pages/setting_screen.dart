@@ -2,7 +2,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/localization/app_localization.dart';
-import 'package:libra_movie/pages/language_screen.dart';
 import 'package:libra_movie/pages/theme_screen.dart';
 import 'package:libra_movie/widgets/setting_item.dart';
 
@@ -14,14 +13,14 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  String languageStr;
-  String themeStr;
+  String languageStr = "";
+  String themeStr = "";
 
   @override
   void initState() {
     super.initState();
-    initLanguage(context);
-    initTheme(context);
+    // initLanguage(context);
+    // initTheme(context);
   }
 
   initLanguage(context) {
@@ -65,42 +64,46 @@ class _SettingScreenState extends State<SettingScreen> {
             SizedBox(
               height: 10,
             ),
-            SettingItem(
-              icon: Icon(Icons.language),
-              text: '语言',
-              text2: languageStr=="1"?AppLocalizations.of(context).translate('System'):languageStr,
-              callBack: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LanguageScreen()));
-              },
-            ),
+            // SettingItem(
+            //   icon: Icon(Icons.language),
+            //   text: '语言',
+            //   text2: languageStr == "1"
+            //       ? AppLocalizations.of(context).translate('System')
+            //       : languageStr,
+            //   callBack: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => LanguageScreen()));
+            //   },
+            // ),
             SettingItem(
               icon: Icon(Icons.dashboard),
               text: '夜间模式',
-              text2: themeStr=="1"?AppLocalizations.of(context).translate('System'):themeStr,
+              text2: themeStr == "1"
+                  ? AppLocalizations.of(context).translate('System').toString()
+                  : themeStr,
               callBack: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ThemeScreen()));
               },
             ),
-            SettingItem(
-              icon: Icon(Icons.golf_course),
-              text: '项目地址',
-              text2: "",
-              callBack: () {},
-            ),
-            SettingItem(
-              icon: Icon(Icons.contact_phone),
-              text: '联系我',
-              text2: "",
-              callBack: () {},
-            ),
-            SettingItem(
-              icon: Icon(Icons.verified_user),
-              text: '版本号',
-              text2: "1.0.0",
-              callBack: () {},
-            ),
+            // SettingItem(
+            //   icon: Icon(Icons.golf_course),
+            //   text: '项目地址',
+            //   text2: "",
+            //   callBack: () {},
+            // ),
+            // SettingItem(
+            //   icon: Icon(Icons.contact_phone),
+            //   text: '联系我',
+            //   text2: "",
+            //   callBack: () {},
+            // ),
+            // SettingItem(
+            //   icon: Icon(Icons.verified_user),
+            //   text: '版本号',
+            //   text2: "1.0.0",
+            //   callBack: () {},
+            // ),
           ],
         ));
   }

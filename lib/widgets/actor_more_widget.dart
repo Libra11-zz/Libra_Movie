@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/localization/app_localization.dart';
-import 'package:libra_movie/models/person_detail.dart';
 import 'package:libra_movie/models/person_model.dart';
 import 'package:libra_movie/pages/actor_detail_screen.dart';
 import 'package:libra_movie/res/TextStyle.dart';
@@ -79,6 +78,7 @@ class _ActorMoreWidgetState extends State<ActorMoreWidget> {
   @override
   void dispose() {
     super.dispose();
+    streamController.close();
     stateManager.dispose();
   }
 
