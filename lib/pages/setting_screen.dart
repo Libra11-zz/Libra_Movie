@@ -20,11 +20,11 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
     super.initState();
-    initLanguage();
-    initTheme();
+    initLanguage(context);
+    initTheme(context);
   }
 
-  initLanguage() {
+  initLanguage(context) {
     String language = SpUtil.getString(Constant.language);
     switch (language) {
       case 'zh':
@@ -33,13 +33,13 @@ class _SettingScreenState extends State<SettingScreen> {
       case 'en':
         languageStr = "English";
         break;
-      case 'System':
-        languageStr = AppLocalizations.of(context).translate('System');
+      default:
+        languageStr = "1";
         break;
     }
   }
 
-  initTheme() {
+  initTheme(context) {
     String theme = SpUtil.getString(Constant.theme);
     switch (theme) {
       case 'Dark':
@@ -49,7 +49,7 @@ class _SettingScreenState extends State<SettingScreen> {
         themeStr = AppLocalizations.of(context).translate('Close');
         break;
       default:
-        themeStr = AppLocalizations.of(context).translate('System');
+        themeStr = "1";
         break;
     }
   }
@@ -68,7 +68,7 @@ class _SettingScreenState extends State<SettingScreen> {
             SettingItem(
               icon: Icon(Icons.language),
               text: '语言',
-              text2: languageStr,
+              text2: languageStr=="1"?AppLocalizations.of(context).translate('System'):languageStr,
               callBack: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LanguageScreen()));
@@ -77,7 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
             SettingItem(
               icon: Icon(Icons.dashboard),
               text: '夜间模式',
-              text2: themeStr,
+              text2: themeStr=="1"?AppLocalizations.of(context).translate('System'):themeStr,
               callBack: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ThemeScreen()));

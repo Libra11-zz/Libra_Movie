@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/localization/app_localization.dart';
 import 'package:libra_movie/models/movie_model.dart';
+import 'package:libra_movie/pages/more_movie_screen.dart';
 import 'package:libra_movie/pages/movie_detail_screen.dart';
 import 'package:libra_movie/res/TextStyle.dart';
 import 'package:libra_movie/utils/net_state.dart';
@@ -86,22 +87,30 @@ Widget contentWidget(context, data) {
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
       Text(AppLocalizations.of(context).translate('Popular'),
           style: TextStyles.textBold16),
-      Container(
-        child: Row(
-          children: <Widget>[
-            Text(
-              '${AppLocalizations.of(context).translate('All')} ',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).textTheme.title.color),
-            ),
-            Text(data.totalResults.toString(),
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MoreMovieScreen(url: "Popular")));
+        },
+        child: Container(
+          child: Row(
+            children: <Widget>[
+              Text(
+                '${AppLocalizations.of(context).translate('All')} ',
                 style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context).textTheme.title.color)),
-            Icon(Icons.chevron_right,
-                color: Theme.of(context).textTheme.title.color)
-          ],
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.title.color),
+              ),
+              Text(data.totalResults.toString(),
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).textTheme.title.color)),
+              Icon(Icons.chevron_right,
+                  color: Theme.of(context).textTheme.title.color)
+            ],
+          ),
         ),
       )
     ]),

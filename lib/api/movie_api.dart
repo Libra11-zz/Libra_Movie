@@ -34,7 +34,7 @@ class MovieApi {
     dio = new Dio(options);
   }
 
-  Future<MovieModel> getMovies() async {
+  Future<MovieModel> getMovies({int page = 1}) async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': language,
@@ -50,7 +50,7 @@ class MovieApi {
     }
   }
 
-  Future<MovieModel> getTopRated() async {
+  Future<MovieModel> getTopRated({int page = 1}) async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': language,
@@ -66,11 +66,11 @@ class MovieApi {
     }
   }
 
-  Future<MovieModel> getNowPalying() async {
+  Future<MovieModel> getNowPalying({int page = 1}) async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': language,
-      'page': 1
+      'page': page
     };
     try {
       Response response =
