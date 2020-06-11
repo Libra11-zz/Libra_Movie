@@ -82,10 +82,11 @@ class MovieApi {
     }
   }
 
-  Future<PersonModel> getPersons() async {
+  Future<PersonModel> getPersons({int page = 1}) async {
     Map<String, Object> params = {
       'api_key': apiKey,
       'language': language,
+      'page': page
     };
     try {
       Response response =

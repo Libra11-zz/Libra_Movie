@@ -19,9 +19,6 @@ class _MoreMovieScreenState extends State<MoreMovieScreen> {
           elevation: 0,
           title: Text(AppLocalizations.of(context).translate('Movie')),
           automaticallyImplyLeading: false,
-          actions: <Widget>[
-            IconButton(onPressed: () {}, icon: Icon(Icons.search))
-          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
