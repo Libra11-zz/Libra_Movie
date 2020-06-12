@@ -21,6 +21,7 @@ class _SettingItemState extends State<SettingItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: widget.callBack,
       child: Container(
           width: MediaQuery.of(context).size.width,

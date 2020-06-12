@@ -27,5 +27,10 @@
   "Close": "关闭",
   "System": "跟随系统",
   "Actor": "演员",
-  "EnterMovie": "请输入电影名称"
+  "EnterMovie": "请输入电影名称",
+  "Contact": "联系我",
+  "Version": "版本号",
+  "ProjectAddr": "项目地址",
+  "DarkMode": "夜间模式",
+  "Language": "语言"
 }

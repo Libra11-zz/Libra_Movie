@@ -25,7 +25,12 @@
   "Known": "Known",
   "Open": "Open",
   "Close": "Close",
-  "System": "Follow system",
+  "System": "System",
   "Actor": "Actor",
-  "EnterMovie": "Please enter the movie name"
+  "EnterMovie": "Please enter the movie name",
+  "Contact": "Contact me",
+  "Version": "Version",
+  "ProjectAddr": "Project",
+  "DarkMode": "Dark Mode",
+  "Language": "Language"
 }
