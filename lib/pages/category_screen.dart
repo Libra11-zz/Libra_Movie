@@ -24,7 +24,10 @@ class _CategoryScreenState extends State<CategoryScreen>
         actions: <Widget>[
           IconButton(
               onPressed: () {
-                showSearch(context: context, delegate: InputSearchScreen());
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => InputSearchScreen()));
               },
               icon: Icon(Icons.search))
         ],

@@ -62,9 +62,18 @@ class ThemeProvider extends ChangeNotifier {
         unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
         labelColor: isDarkMode ? Colors.white : Colors.black,
       ),
+      iconTheme: IconThemeData(
+        color: isDarkMode ? Colors.white : Colors.black,
+      ),
+      primaryIconTheme:
+          IconThemeData(color: isDarkMode ? Colors.white : Colors.black),
+      accentIconTheme: IconThemeData(
+        color: isDarkMode ? Colors.white : Colors.black,
+      ),
       inputDecorationTheme: InputDecorationTheme(
-          hintStyle:
-              isDarkMode ? TextStyles.textHint16 : TextStyles.textDarkGray14,
+          suffixStyle:
+              TextStyle(color: isDarkMode ? Colors.white : Colors.black),
+          hintStyle: isDarkMode ? TextStyles.textGray12 : TextStyles.text,
           fillColor: Colours.bg_color),
     );
   }

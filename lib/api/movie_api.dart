@@ -22,7 +22,7 @@ class MovieApi {
   String getPersonsUrl = '/trending/person/week';
   String getMovieUrl = '/movie';
   String getPersonDetailUrl = '/person';
-  String getSearchMovieUrl = 'search/movie';
+  String getSearchMovieUrl = '/search/movie';
   Dio dio;
   String language;
   MovieApi() {

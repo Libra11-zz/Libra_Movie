@@ -26,5 +26,6 @@
   "Open": "Open",
   "Close": "Close",
   "System": "Follow system",
-  "Actor": "Actor"
+  "Actor": "Actor",
+  "EnterMovie": "Please enter the movie name"
 }
