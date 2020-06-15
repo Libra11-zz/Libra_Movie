@@ -23,6 +23,7 @@ class MovieApi {
   String getMovieUrl = '/movie';
   String getPersonDetailUrl = '/person';
   String getSearchMovieUrl = '/search/movie';
+  String getDiscoverUrl = '/discover/movie';
   Dio dio;
   String language;
   MovieApi() {
@@ -246,6 +247,28 @@ class MovieApi {
     try {
       Response response =
           await dio.request(getSearchMovieUrl, queryParameters: params);
+      return MovieModel.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print('Exception occured: $error stacktrace: $stacktrace');
+      return null;
+    }
+  }
+
+  Future<MovieModel> getFilterMovie({
+    String sortBy,
+    int page = 1,
+    String releaseDateGte,
+    String releaseDateLte,
+    int voteCount,
+    double voteAverageGte,
+    double voteAverageLte,
+    String genres,
+    int runtimeGte,
+    int runtimeLte,
+  }) async {
+    try {
+      Response response = await dio.request(
+          "$getDiscoverUrl?api_key=$apiKey&language=$language&page=$page&sort_by=$sortBy&primary_release_date.gte=$releaseDateGte&primary_release_date.lte=$releaseDateLte&vote_count.gte=$voteCount&vote_average.gte=$voteAverageGte&vote_average.lte=$voteAverageLte&with_genres=$genres&with_runtime.gte=$runtimeGte&with_runtime.lte=$runtimeLte");
       return MovieModel.fromJson(response.data);
     } catch (error, stacktrace) {
       print('Exception occured: $error stacktrace: $stacktrace');

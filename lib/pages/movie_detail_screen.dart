@@ -68,6 +68,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                               RatingBar(
                                 onRatingUpdate: (_) {},
                                 initialRating: widget.movie.voteAvarege / 2,
+                                unratedColor: Colors.white,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,

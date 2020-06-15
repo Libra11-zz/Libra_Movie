@@ -1,348 +1,475 @@
+import 'dart:async';
+
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
+import 'package:libra_movie/api/movie_api.dart';
 import 'package:libra_movie/localization/app_localization.dart';
-
-class SortCondition {
-  String name;
-  bool isSelected;
-
-  SortCondition({this.name, this.isSelected});
-}
+import 'package:libra_movie/models/genre_model.dart';
+import 'package:libra_movie/models/movie_model.dart';
+import 'package:libra_movie/pages/input_search_screen.dart';
+import 'package:libra_movie/pages/movie_detail_screen.dart';
+import 'package:libra_movie/res/TextStyle.dart';
+import 'package:libra_movie/utils/net_state.dart';
+import 'package:libra_movie/utils/state_manager.dart';
+import 'package:libra_movie/widgets/choice_chip_wdiget.dart';
+import 'package:libra_movie/widgets/error_widget.dart';
+import 'package:libra_movie/widgets/loading_widget.dart';
+import 'package:libra_movie/widgets/min_vote_count_widget.dart';
+import 'package:libra_movie/widgets/movie_more_item.dart';
+import 'package:libra_movie/widgets/runtime_widget.dart';
+import 'package:libra_movie/widgets/vote_average_widget.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key key}) : super(key: key);
-
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
-  List<String> _dropDownHeaderItemStrings = ['全城', '品牌', '距离近', '筛选'];
-  GZXDropdownMenuController _dropdownMenuController =
-      GZXDropdownMenuController();
-  List<SortCondition> _brandSortConditions = [];
-  List<SortCondition> _distanceSortConditions = [];
-  SortCondition _selectBrandSortCondition;
-  SortCondition _selectDistanceSortCondition;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  GlobalKey _stackKey = GlobalKey();
-
-  String _dropdownMenuChange = '';
-
+class _SearchScreenState extends State<SearchScreen>
+    with AutomaticKeepAliveClientMixin {
+  TextEditingController _controller = TextEditingController();
+  TextEditingController _controller2 = TextEditingController();
+  bool isLoading = false;
+  bool error = false;
+  StateManager stateManager;
+  StateManager stateManager2;
+  MovieModel response;
+  GenreModel response2;
+  ScrollController scrollController;
+  MovieApi movieApi;
+  int page = 1;
+  int currentId = 28;
+  double minVoteCount = 0;
+  double minVoteAverage = 0;
+  double maxVoteAverage = 10;
+  double minRuntime = 0;
+  double maxRuntime = 360;
+  String sortBy = 'popularity.desc';
+  String firstDate = DateUtil.formatDate(DateTime(DateTime.now().year - 5),
+      format: "yyyy-MM-dd");
+  String lastDate = DateUtil.formatDate(DateTime.now(), format: "yyyy-MM-dd");
+  List<String> sorts = [
+    "popularity.desc",
+    "popularity.asc",
+    "primary_release_date.desc",
+    "primary_release_date.asc",
+    "vote_average.desc",
+    "vote_average.asc",
+    "vote_count.desc",
+    "vote_count.asc",
+  ];
   @override
   void initState() {
     super.initState();
+    stateManager = StateManager();
+    stateManager2 = StateManager();
+    scrollController = ScrollController();
+    movieApi = MovieApi();
+    _controller.text = firstDate.toString();
+    _controller2.text = lastDate.toString();
 
-    _brandSortConditions.add(SortCondition(name: '全部', isSelected: true));
-    _brandSortConditions.add(SortCondition(name: '金逸影城', isSelected: false));
-    _brandSortConditions
-        .add(SortCondition(name: '中影国际城我比较长，你看我选择后是怎么显示的', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '星美国际城', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '博纳国际城', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '大地影院', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '嘉禾影城', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '太平洋影城', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城1', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城2', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城3', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城4', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城5', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城6', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城7', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城8', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '万达影城9', isSelected: false));
-    _selectBrandSortCondition = _brandSortConditions[0];
+    loadData();
+    _loadGenre();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        // 加载更多
+        setState(() {
+          isLoading = true;
+          error = false;
+        });
+        movieApi
+            .getFilterMovie(
+                page: page + 1,
+                sortBy: sortBy,
+                releaseDateGte: firstDate,
+                releaseDateLte: lastDate,
+                voteAverageGte: minVoteAverage,
+                voteAverageLte: maxVoteAverage,
+                runtimeGte: minRuntime.toInt(),
+                runtimeLte: maxRuntime.toInt(),
+                genres: currentId.toString(),
+                voteCount: minVoteCount.toInt())
+            .then((val) {
+          page = val.page;
+          setState(() {
+            isLoading = false;
+            response.results.addAll(val.results);
+          });
+        }).catchError((e) {
+          setState(() {
+            error = true;
+          });
+        });
+      }
+    });
+  }
 
-    _distanceSortConditions.add(SortCondition(name: '距离近', isSelected: true));
-    _distanceSortConditions.add(SortCondition(name: '价格低', isSelected: false));
-    _distanceSortConditions.add(SortCondition(name: '价格高', isSelected: false));
+  Future<MovieModel> _loadData() async {
+    response = await movieApi.getFilterMovie(
+        sortBy: sortBy,
+        releaseDateGte: firstDate,
+        releaseDateLte: lastDate,
+        voteAverageGte: minVoteAverage,
+        voteAverageLte: maxVoteAverage,
+        runtimeGte: minRuntime.toInt(),
+        runtimeLte: maxRuntime.toInt(),
+        genres: currentId.toString(),
+        voteCount: minVoteCount.toInt());
+    return response;
+  }
 
-    _selectDistanceSortCondition = _distanceSortConditions[0];
+  Future<GenreModel> _loadGenre() async {
+    response2 = await movieApi.getGenre();
+    return response2;
+  }
+
+  void loadData() {
+    stateManager.loading();
+    _loadData().then((v) {
+      if (v == null) {
+        stateManager.error();
+      } else {
+        stateManager.content(v);
+      }
+    }).catchError((e) {
+      stateManager.error();
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(AppLocalizations.of(context).translate('Category')),
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.search))
-        ],
-      ),
-      body: Stack(
-        key: _stackKey,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              // 下拉菜单头部
-              GZXDropDownHeader(
-                // 下拉的头部项，目前每一项，只能自定义显示的文字、图标、图标大小修改
-                items: [
-                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[0]),
-                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[1]),
-                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[2]),
-                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[3],
-                      iconData: Icons.filter_frames, iconSize: 18),
-                ],
-                // GZXDropDownHeader对应第一父级Stack的key
-                stackKey: _stackKey,
-                // controller用于控制menu的显示或隐藏
-                controller: _dropdownMenuController,
-                // 当点击头部项的事件，在这里可以进行页面跳转或openEndDrawer
-                onItemTap: (index) {
-                  if (index == 3) {
-                    _dropdownMenuController.hide();
-                    _scaffoldKey.currentState.openEndDrawer();
-                  }
-                },
-//                // 头部背景颜色
-                color: Colors.orangeAccent,
-//                // 头部边框宽度
-                borderWidth: 0,
-//                // 分割线高度
-                dividerHeight: 0,
-//                // 文字样式
-                style: TextStyle(color: Color(0xFF666666), fontSize: 14),
-//                // 下拉时文字样式
-                dropDownStyle: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).primaryColor,
+  void dispose() {
+    super.dispose();
+    stateManager.dispose();
+  }
+
+  _onFilterButtonPressed() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+          child: Container(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: bottomSheet(),
+      )),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          side: BorderSide(width: 0, style: BorderStyle.solid)),
+    ).whenComplete(() {
+      stateManager2.dispose();
+    });
+  }
+
+  Widget bottomSheet() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, top: 30, right: 10),
+      child: Column(children: <Widget>[
+        choiceChipWidget(AppLocalizations.of(context).translate('Category'),
+            response2.results),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: <Widget>[
+            Text(AppLocalizations.of(context).translate('DateTime'),
+                style: TextStyles.textBold16),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Container(
+                height: 50,
+                child: TextField(
+                  controller: _controller,
+                  onChanged: (val) {
+                    setState(() {
+                      firstDate = val;
+                    });
+                  },
+                  textAlignVertical: TextAlignVertical.center,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 20),
+                    isDense: true,
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orangeAccent)),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orangeAccent)),
+                    suffixIcon: IconButton(
+                      onPressed: () => pickFirstDate(),
+                      icon: Icon(
+                        Icons.date_range,
+                        color: Colors.orangeAccent,
+                      ),
+                    ),
+                  ),
                 ),
-//                // 下拉时图标颜色
-                iconDropDownColor: Colors.white,
               ),
-              Expanded(
-                child: ListView.separated(
-                    itemCount: 100,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(height: 1.0),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        child: ListTile(
-                          leading: Text('test$index'),
-                        ),
-                        onTap: () {},
-                      );
-                    }),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Expanded(
+              child: Container(
+                height: 50,
+                child: TextField(
+                  controller: _controller2,
+                  onChanged: (val) {
+                    setState(() {
+                      lastDate = val;
+                    });
+                  },
+                  textAlignVertical: TextAlignVertical.center,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    fillColor: Colors.green,
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orangeAccent)),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orangeAccent)),
+                    suffixIcon: IconButton(
+                      onPressed: () => pickLastDate(),
+                      icon: Icon(
+                        Icons.date_range,
+                        color: Colors.orangeAccent,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ],
-          ),
-          // 下拉菜单
-          GZXDropDownMenu(
-            // controller用于控制menu的显示或隐藏
-            controller: _dropdownMenuController,
-            // 下拉菜单显示或隐藏动画时长
-            animationMilliseconds: 300,
-            // 下拉后遮罩颜色
-//          maskColor: Theme.of(context).primaryColor.withOpacity(0.5),
-//          maskColor: Colors.red.withOpacity(0.5),
-            dropdownMenuChanging: (isShow, index) {
-              setState(() {
-                _dropdownMenuChange = '(正在${isShow ? '显示' : '隐藏'}$index)';
-                print(_dropdownMenuChange);
-              });
-            },
-            dropdownMenuChanged: (isShow, index) {
-              setState(() {
-                _dropdownMenuChange = '(已经${isShow ? '显示' : '隐藏'}$index)';
-                print(_dropdownMenuChange);
-              });
-            },
-            // 下拉菜单，高度自定义，你想显示什么就显示什么，完全由你决定，你只需要在选择后调用_dropdownMenuController.hide();即可
-            menus: [
-              GZXDropdownMenuBuilder(
-                  dropDownHeight: 40 * 8.0,
-                  dropDownWidget: _buildAddressWidget((selectValue) {
-                    _dropDownHeaderItemStrings[0] = selectValue;
-                    _dropdownMenuController.hide();
-                    setState(() {});
-                  })),
-              GZXDropdownMenuBuilder(
-                  dropDownHeight: 40 * 8.0,
-                  dropDownWidget:
-                      _buildConditionListWidget(_brandSortConditions, (value) {
-                    _selectBrandSortCondition = value;
-                    _dropDownHeaderItemStrings[1] =
-                        _selectBrandSortCondition.name == '全部'
-                            ? '品牌'
-                            : _selectBrandSortCondition.name;
-                    _dropdownMenuController.hide();
-                    setState(() {});
-                  })),
-              GZXDropdownMenuBuilder(
-                  dropDownHeight: 40.0 * _distanceSortConditions.length,
-                  dropDownWidget: _buildConditionListWidget(
-                      _distanceSortConditions, (value) {
-                    _selectDistanceSortCondition = value;
-                    _dropDownHeaderItemStrings[2] =
-                        _selectDistanceSortCondition.name;
-                    _dropdownMenuController.hide();
-                    setState(() {});
-                  })),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        MinVoteCountWidget(
+          callBack: (val) {
+            setState(() {
+              minVoteCount = val;
+            });
+          },
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        VoteAverageWidget(callBack: (val) {
+          setState(() {
+            minVoteAverage = val.start;
+            maxVoteAverage = val.end;
+          });
+        }),
+        SizedBox(
+          height: 10,
+        ),
+        RuntimeWidget(callBack: (val) {
+          setState(() {
+            minRuntime = val.start;
+            maxRuntime = val.end;
+          });
+        }),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            OutlineButton(
+                borderSide: BorderSide(color: Colors.orangeAccent),
+                onPressed: () {
+                  loadData();
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  AppLocalizations.of(context).translate('Sure'),
+                )),
+            SizedBox(
+              width: 10,
+            ),
+            OutlineButton(
+                borderSide: BorderSide(color: Colors.orangeAccent),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  AppLocalizations.of(context).translate('Cancel'),
+                )),
+          ],
+        ),
+        SizedBox(
+          height: 30,
+        )
+      ]),
     );
   }
 
-  int _selectTempFirstLevelIndex = 0;
-  int _selectFirstLevelIndex = 0;
-  int _selectSecondLevelIndex = -1;
+  pickFirstDate() async {
+    DateTime date = await showDatePicker(
+        context: context,
+        initialDate: DateUtil.getDateTime(firstDate),
+        firstDate: DateUtil.getDateTime("1960-01-01"),
+        lastDate: DateTime.now());
+    if (date != null) {
+      setState(() {
+        firstDate = DateUtil.formatDate(date, format: "yyyy-MM-dd");
+      });
+      _controller.text = firstDate;
+    }
+  }
 
-  _buildAddressWidget(void itemOnTap(String selectValue)) {
-//    List firstLevels = new List<int>.filled(15, 0);
-    List firstLevels = new List<String>.generate(15, (int index) {
-      if (index == 0) {
-        return '全部';
-      }
-      return '$index区';
-    });
+  pickLastDate() async {
+    DateTime date = await showDatePicker(
+        context: context,
+        initialDate: DateUtil.getDateTime(lastDate),
+        firstDate: DateUtil.getDateTime("1960-01-01"),
+        lastDate: DateTime.now());
+    if (date != null) {
+      setState(() {
+        lastDate = DateUtil.formatDate(date, format: "yyyy-MM-dd");
+      });
+      _controller2.text = lastDate;
+    }
+  }
 
-    List secondLevels = new List<String>.generate(15, (int index) {
-      if (index == 0) {
-        return '全部';
-      }
-      return '$_selectTempFirstLevelIndex$index街道办';
-    });
-
+  Widget choiceChipWidget(String name, List<Genre> list) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-          width: 100,
-          child: ListView(
-            children: firstLevels.map((item) {
-              int index = firstLevels.indexOf(item);
-              return GestureDetector(
-                onTap: () {
-                  _selectTempFirstLevelIndex = index;
-
-                  if (_selectTempFirstLevelIndex == 0) {
-                    itemOnTap('全城');
-                    return;
-                  }
-                  setState(() {});
-                },
-                child: Container(
-                    height: 40,
-                    color: _selectTempFirstLevelIndex == index
-                        ? Colors.grey[200]
-                        : Colors.white,
-                    alignment: Alignment.center,
-                    child: _selectTempFirstLevelIndex == index
-                        ? Text(
-                            '$item',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          )
-                        : Text('$item')),
-              );
-            }).toList(),
-          ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Text(name, style: TextStyles.textBold16),
+        ),
+        SizedBox(
+          width: 10,
         ),
         Expanded(
-          child: Container(
-            color: Colors.grey[200],
-            child: _selectTempFirstLevelIndex == 0
-                ? Container()
-                : ListView(
-                    children: secondLevels.map((item) {
-                      int index = secondLevels.indexOf(item);
-                      return GestureDetector(
-                          onTap: () {
-                            _selectSecondLevelIndex = index;
-                            _selectFirstLevelIndex = _selectTempFirstLevelIndex;
-                            if (_selectSecondLevelIndex == 0) {
-                              itemOnTap(firstLevels[_selectFirstLevelIndex]);
-                            } else {
-                              itemOnTap(item);
-                            }
-                          },
-                          child: Container(
-                            height: 40,
-                            alignment: Alignment.centerLeft,
-                            child: Row(children: <Widget>[
-                              SizedBox(
-                                width: 20,
-                              ),
-                              _selectFirstLevelIndex ==
-                                          _selectTempFirstLevelIndex &&
-                                      _selectSecondLevelIndex == index
-                                  ? Text(
-                                      '$item',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    )
-                                  : Text('$item'),
-                            ]),
-                          ));
-                    }).toList(),
-                  ),
-          ),
-        )
+            child: ChoiceChipWidget(
+          list: list,
+          callBack: (id) {
+            setState(() {
+              currentId = id;
+            });
+          },
+        )),
       ],
     );
   }
 
-  _buildConditionListWidget(
-      items, void itemOnTap(SortCondition sortCondition)) {
-    return ListView.separated(
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      itemCount: items.length,
-      // item 的个数
-      separatorBuilder: (BuildContext context, int index) =>
-          Divider(height: 1.0),
-      // 添加分割线
-      itemBuilder: (BuildContext context, int index) {
-        SortCondition goodsSortCondition = items[index];
-        return GestureDetector(
-          onTap: () {
-            for (var value in items) {
-              value.isSelected = false;
-            }
-            goodsSortCondition.isSelected = true;
-
-            itemOnTap(goodsSortCondition);
-          },
-          child: Container(
-//            color: Colors.blue,
-            height: 40,
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                  child: Text(
-                    goodsSortCondition.name,
-                    style: TextStyle(
-                      color: goodsSortCondition.isSelected
-                          ? Theme.of(context).primaryColor
-                          : Colors.black,
-                    ),
-                  ),
-                ),
-                goodsSortCondition.isSelected
-                    ? Icon(
-                        Icons.check,
-                        color: Theme.of(context).primaryColor,
-                        size: 16,
-                      )
-                    : SizedBox(),
-                SizedBox(
-                  width: 16,
-                ),
-              ],
-            ),
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: Text(AppLocalizations.of(context).translate('Search')),
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InputSearchScreen()));
+                },
+                icon: Icon(Icons.search))
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(AppLocalizations.of(context).translate('FindMovie'),
+                      style: TextStyles.textBold16),
+                  Row(
+                    children: <Widget>[
+                      Row(children: <Widget>[
+                        DropdownButton(
+                            value: sortBy,
+                            items: sorts.map<DropdownMenuItem>((String m) {
+                              return DropdownMenuItem<String>(
+                                value: m,
+                                child: Text(
+                                  AppLocalizations.of(context).translate(m),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                sortBy = val;
+                              });
+                              loadData();
+                            })
+                      ]),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Row(children: <Widget>[
+                        FlatButton.icon(
+                            label: Text(AppLocalizations.of(context)
+                                .translate('Filter')),
+                            onPressed: () => _onFilterButtonPressed(),
+                            icon: Icon(Icons.filter, size: 16)),
+                      ]),
+                    ],
+                  )
+                ],
+              ),
+              StreamBuilder<NetState>(
+                  stream: stateManager.streamController.stream,
+                  builder: (context, snap) {
+                    Widget result;
+                    if (snap.data != null) {
+                      if (snap.data is LoadingState) {
+                        result = LoadingWidget();
+                      } else if (snap.data is ErrorState) {
+                        result = Error1Widget();
+                      } else if (snap.data is ContentState) {
+                        result = contentWidget(
+                            context, (snap.data as ContentState).t);
+                      }
+                    } else {
+                      result = Container();
+                    }
+                    return result;
+                  })
+            ],
           ),
-        );
-      },
+        ));
+  }
+
+  Widget contentWidget(context, data) {
+    return Expanded(
+      child: Column(children: <Widget>[
+        Flexible(
+          child: ListView.builder(
+            controller: scrollController,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: data.results.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MovieDetailScreen(movie: data.results[index])));
+                },
+                child: MovieMoreItem(movie: data.results[index]),
+              );
+            },
+          ),
+        ),
+        isLoading
+            ? CircularProgressIndicator(
+                value: null,
+                strokeWidth: 1.0,
+              )
+            : Container(),
+        error ? Text('error') : Container()
+      ]),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

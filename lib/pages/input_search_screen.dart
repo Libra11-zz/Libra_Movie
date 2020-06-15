@@ -79,7 +79,10 @@ class _InputSearchScreenState extends State<InputSearchScreen> {
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: BorderSide(style: BorderStyle.none),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(style: BorderStyle.none),
               ),
               hintText: AppLocalizations.of(context).translate('EnterMovie'),
               suffixIcon: IconButton(

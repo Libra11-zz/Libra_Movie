@@ -67,6 +67,7 @@ class _MovieMoreItemState extends State<MovieMoreItem> {
             RatingBar(
               onRatingUpdate: (_) {},
               initialRating: movie.voteAvarege / 2,
+              unratedColor: Colors.white,
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,

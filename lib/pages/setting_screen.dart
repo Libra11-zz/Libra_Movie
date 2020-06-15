@@ -2,8 +2,8 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:libra_movie/common/common.dart';
 import 'package:libra_movie/localization/app_localization.dart';
-import 'package:libra_movie/pages/contact_me_screen.dart';
-import 'package:libra_movie/pages/github_screen.dart';
+// import 'package:libra_movie/pages/contact_me_screen.dart';
+// import 'package:libra_movie/pages/github_screen.dart';
 import 'package:libra_movie/pages/language_screen.dart';
 import 'package:libra_movie/pages/theme_screen.dart';
 import 'package:libra_movie/widgets/setting_item.dart';
@@ -76,8 +76,8 @@ class _SettingScreenState extends State<SettingScreen> {
               text: AppLocalizations.of(context).translate('ProjectAddr'),
               text2: "",
               callBack: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GithubScreen()));
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => GithubScreen()));
               },
             ),
             SettingItem(
@@ -85,8 +85,8 @@ class _SettingScreenState extends State<SettingScreen> {
               text: AppLocalizations.of(context).translate('Contact'),
               text2: "",
               callBack: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ContactMeScreen()));
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => ContactMeScreen()));
               },
             ),
             SettingItem(

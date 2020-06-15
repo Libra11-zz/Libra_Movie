@@ -32,5 +32,21 @@
   "Version": "Version",
   "ProjectAddr": "Project",
   "DarkMode": "Dark Mode",
-  "Language": "Language"
+  "Language": "Language",
+  "DateTime": "Release Dates",
+  "MinimumUserVotes": "Minimum User Votes",
+  "UserScore": "User Score",
+  "RunTime": "Runtime",
+  "Sure": "Sure",
+  "Cancel": "Cancel",
+  "FindMovie": "Find Movie",
+  "Filter": "Filter",
+  "popularity.desc": "popularity.desc",
+  "popularity.asc": "popularity.asc",
+  "primary_release_date.desc": "primary_release_date.desc",
+  "primary_release_date.asc": "primary_release_date.asc",
+  "vote_average.desc": "vote_average.desc",
+  "vote_average.asc": "vote_average.asc",
+  "vote_count.desc": "vote_count.desc",
+  "vote_count.asc": "vote_count.asc"
 }

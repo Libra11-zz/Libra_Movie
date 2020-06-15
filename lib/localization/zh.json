@@ -32,5 +32,21 @@
   "Version": "版本号",
   "ProjectAddr": "项目地址",
   "DarkMode": "夜间模式",
-  "Language": "语言"
+  "Language": "语言",
+  "DateTime": "日期",
+  "MinimumUserVotes": "最少投票人数",
+  "UserScore": "用户评分",
+  "RunTime": "时长",
+  "Sure": "确认",
+  "Cancel": "取消",
+  "FindMovie": "找电影",
+  "Filter": "筛选",
+  "popularity.desc": "受欢迎降序",
+  "popularity.asc": "受欢迎升序",
+  "primary_release_date.desc": "上映时间降序",
+  "primary_release_date.asc": "上映时间升序",
+  "vote_average.desc": "评分降序",
+  "vote_average.asc": "评分升序",
+  "vote_count.desc": "投票降序",
+  "vote_count.asc": "投票升序"
 }

@@ -161,6 +161,7 @@ Widget contentWidget(context, data) {
                           RatingBar(
                             itemSize: 8.0,
                             initialRating: data.results[index].voteAvarege / 2,
+                            unratedColor: Colors.white,
                             minRating: 1,
                             direction: Axis.horizontal,
                             allowHalfRating: true,

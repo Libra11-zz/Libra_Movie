@@ -62,6 +62,20 @@ class ThemeProvider extends ChangeNotifier {
         unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
         labelColor: isDarkMode ? Colors.white : Colors.black,
       ),
+      chipTheme: ChipThemeData(
+        backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        disabledColor: isDarkMode ? Colors.black : Colors.white,
+        selectedColor: Colors.orangeAccent,
+        secondarySelectedColor: Colors.orangeAccent,
+        labelPadding: EdgeInsets.all(0),
+        padding: EdgeInsets.all(5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        labelStyle: isDarkMode ? TextStyles.textDark : TextStyles.text,
+        secondaryLabelStyle: TextStyle(),
+        brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      ),
       iconTheme: IconThemeData(
         color: isDarkMode ? Colors.white : Colors.black,
       ),

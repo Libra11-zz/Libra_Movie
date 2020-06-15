@@ -46,6 +46,7 @@ class MovieItemHorizontal extends StatelessWidget {
                         onRatingUpdate: (_) {},
                         initialRating: rate / 2,
                         direction: Axis.horizontal,
+                        unratedColor: Colors.white,
                         allowHalfRating: true,
                         itemCount: 5,
                         ignoreGestures: true,
